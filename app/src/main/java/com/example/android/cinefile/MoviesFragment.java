@@ -106,7 +106,7 @@ public class MoviesFragment extends Fragment {
             JSONObject movieJson = new JSONObject(movieJsonStr);
             JSONArray movieArray = movieJson.getJSONArray(TMDB_RESULTS);
 
-            String[] resultStrs = new String[0];
+            String[] resultStrs = new String[movieArray.length()];
 
             //TODO: Remove or move SharePrefs.
 //            SharedPreferences sharedPrefs =

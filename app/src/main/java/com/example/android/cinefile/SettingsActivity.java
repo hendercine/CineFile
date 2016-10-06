@@ -6,7 +6,6 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
-import static com.example.android.cinefile.R.string.pref_location_key;
 import static com.example.android.cinefile.R.string.pref_sort_key;
 
 /**
@@ -28,7 +27,6 @@ public class SettingsActivity extends PreferenceActivity
 
         // For all preferences, attach an OnPreferenceChangeListener so the UI summary can be
         // updated when the preference changes.
-        bindPreferenceSummaryToValue(findPreference(getString(pref_location_key)));
         bindPreferenceSummaryToValue(findPreference(getString(pref_sort_key)));
     }
 

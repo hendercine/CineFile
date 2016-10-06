@@ -5,31 +5,25 @@
     <string name="refresh">Refresh</string>
     <string name="title_activity_detail">DetailActivity</string>
     <string name="title_activity_settings">Settings</string>
-    <string name="pref_location_label">Location</string>
-    <string name="pref_location_key">location</string>
 
-    <!-- Default postal code for location preference [CHAR LIMIT=NONE] -->
-    <string name="pref_location_default" translatable="false">91423</string>
+    <!-- Label for the sort by preference [CHAR LIMIT=30] -->
+    <string name="pref_sort_label">Sort By</string>
 
-    <!-- Label for the temperature units preference [CHAR LIMIT=30] -->
-    <string name="pref_units_label">Temperature Units</string>
+    <!-- Label for most popular option in sort by preference [CHAR LIMIT=25] -->
+    <string name="pref_sort_label_popular">Most Popular</string>
 
-    <!-- Label for metric option in temperature unit preference [CHAR LIMIT=25] -->
-    <string name="pref_units_label_metric">Metric</string>
+    <!-- Label for top rated option in sort by preference [CHAR LIMIT=25] -->
+    <string name="pref_sort_label_rated">Top Rated</string>
 
-    <!-- Label for imperial option in temperature unit preference [CHAR LIMIT=25] -->
-    <string name="pref_units_label_imperial">Imperial</string>
+    <!-- Key name for sort order preference in SharedPreferences [CHAR LIMIT=NONE] -->
+    <string name="pref_sort_key" translatable="false">sort</string>
 
-    <!-- Key name for temperature unit preference in SharedPreferences [CHAR LIMIT=NONE] -->
-    <string name="pref_sort_key" translatable="false">units</string>
+    <!-- Value in SharedPreferences for most popular option [CHAR LIMIT=NONE] -->
+    <string name="pref_sort_popular" translatable="false">popular</string>
 
-    <!-- Value in SharedPreferences for metric temperature option [CHAR LIMIT=NONE] -->
-    <string name="pref_sort_popular" translatable="false">metric</string>
+    <!-- Value in SharedPreferences for top rated option [CHAR LIMIT=NONE] -->
+    <string name="pref_sort_rated" translatable="false">top_rated</string>
 
-    <!-- Value in SharedPreferences for imperial temperature option [CHAR LIMIT=NONE] -->
-    <string name="pref_units_imperial" translatable="false">imperial</string>
-    <string name="action_map">Map Location</string>
     <string name="action_share">Share</string>
-
 
 </resources>

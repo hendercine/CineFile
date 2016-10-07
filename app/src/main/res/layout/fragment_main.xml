@@ -9,7 +9,7 @@
     tools:context="com.example.android.cinefile.MoviesFragment">
 
     <ListView
-        android:id="@+id/listview_forecast"
+        android:id="@+id/list_view_posters"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

@@ -25,5 +25,11 @@
     <string name="pref_sort_rated" translatable="false">top_rated</string>
 
     <string name="action_share">Share</string>
+    <string name="json_results">results</string>
+    <string name="json_title">title</string>
+    <string name="json_release_date">release_date</string>
+    <string name="json_poster_path">poster_path</string>
+    <string name="json_vote_avg">vote_average</string>
+    <string name="json_plot_synop">overview</string>
 
 </resources>

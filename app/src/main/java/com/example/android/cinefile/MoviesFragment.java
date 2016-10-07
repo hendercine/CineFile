@@ -1,11 +1,9 @@
 package com.example.android.cinefile;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,6 +30,8 @@ import java.util.ArrayList;
  */
 public class MoviesFragment extends Fragment {
 
+    private MovieAdapter adapter;
+    private ArrayList<Movie> movies;
     private ArrayAdapter<String> mMoviesAdapter;
 
     public MoviesFragment() {
@@ -46,27 +46,25 @@ public class MoviesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        movies = new ArrayList<>();
+        adapter = new MovieAdapter(getActivity(), movies);
+        adapter.clear();
+        mMoviesAdapter = new ArrayAdapter<>(
+                getActivity(),
+                R.layout.list_item_movie,
+                R.id.list_item_movie_poster,
+                new ArrayList<String>());
+        final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        // The ArrayAdapter will take data from a source and
-        // use it to populate the ListView it's attached to.
-        mMoviesAdapter =
-                new ArrayAdapter<>(
-                        getActivity(), // The current context (this activity)
-                        R.layout.list_item_forecast, // The name of the layout ID.
-                        R.id.list_item_forecast_textview, // The ID of the textview to populate.
-                        new ArrayList<String>());
+        ListView listView = (ListView) rootView.findViewById(R.id.list_view_posters);
+        listView.setAdapter(adapter);
 
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-
-        // Get a reference to the ListView, and attach this adapter to it.
-        ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
-        listView.setAdapter(mMoviesAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                String forecast = mMoviesAdapter.getItem(position);
-                Intent intent = new Intent(getActivity(), DetailActivity.class)
-                        .putExtra(Intent.EXTRA_TEXT, forecast);
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String movieDetail = mMoviesAdapter.getItem(i);
+                Intent intent = new Intent(getActivity(), DetailActivity.class).
+                        putExtra(Intent.EXTRA_TEXT, movieDetail);
                 startActivity(intent);
             }
         });
@@ -74,37 +72,67 @@ public class MoviesFragment extends Fragment {
         return rootView;
     }
 
-    private void updateMovies() {
-        FetchMoviesTask moviesTask = new FetchMoviesTask();
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String sortOrder = prefs.getString(getString(R.string.pref_sort_key),
-                getString(R.string.pref_sort_label_popular));
-        moviesTask.execute(sortOrder);
-    }
+    //           TODO: Remove or reuse the folded code below.
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        updateMovies();
-    }
+//        // The ArrayAdapter will take data from a source and
+//        // use it to populate the ListView it's attached to.
+//        mMoviesAdapter =
+//                new ArrayAdapter<>(
+//                        getActivity(), // The current context (this activity)
+//                        R.layout.list_item_movie, // The name of the layout ID.
+//                        R.id.list_item_movie_poster, // The ID of the textview to populate.
+//                        new ArrayList<String>());
+//
+//        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+//
+//        // Get a reference to the ListView, and attach this adapter to it.
+//        ListView listView = (ListView) rootView.findViewById(R.id.list_view_posters);
+//        listView.setAdapter(mMoviesAdapter);
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+//                String moviePoster = mMoviesAdapter.getItem(position);
+//                Intent intent = new Intent(getActivity(), DetailActivity.class)
+//                        .putExtra(Intent.EXTRA_TEXT, moviePoster);
+//                startActivity(intent);
+//            }
+//        });
+//
+//        return rootView;
+//    }
+//
+//    private void updateMovies() {
+//        FetchMoviesTask moviesTask = new FetchMoviesTask();
+//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+//        String sortOrder = prefs.getString(getString(R.string.pref_sort_key),
+//                getString(R.string.pref_sort_label_popular));
+//        moviesTask.execute(sortOrder);
+//    }
+//
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        updateMovies();
+//    }
 
-    public class FetchMoviesTask extends AsyncTask<String, Void, String[]> {
+    public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
 
         private final String LOG_TAG = FetchMoviesTask.class.getSimpleName();
 
-        private String[] getMovieDataFromJson(String movieJsonStr)
+        private ArrayList<Movie> getMovieDataFromJson(String movieJsonStr)
                 throws JSONException {
 
             // These are the names of the JSON objects that need to be extracted.
-            final String TMDB_RESULTS = "results";
-            final String TMDB_TITLE = "title";
-            final String TMDB_RELEASE = "release_date";
-            final String TMDB_VOTE_AVG = "vote_average";
-            final String TMDB_POSTER = "poster_path";
-            final String TMDB_SYNOPSIS = "overview";
+            final String TMDB_RESULTS = getString(R.string.json_results);
+            final String TMDB_TITLE = getString(R.string.json_title);
+            final String TMDB_RELEASE = getString(R.string.json_release_date);
+            final String TMDB_VOTE_AVG = getString(R.string.json_vote_avg);
+            final String TMDB_POSTER = getString(R.string.json_poster_path);
+            final String TMDB_SYNOPSIS = getString(R.string.json_plot_synop);
+            movies = new ArrayList<>();
 
-            JSONObject movieJson = new JSONObject(movieJsonStr);
-            JSONArray movieArray = movieJson.getJSONArray(TMDB_RESULTS);
+            JSONObject moviesJson = new JSONObject(movieJsonStr);
+            JSONArray movieArray = moviesJson.getJSONArray(TMDB_RESULTS);
 
             String[] resultStrs = new String[movieArray.length()];
 
@@ -130,20 +158,15 @@ public class MoviesFragment extends Fragment {
                 vote_average = resultsObject.getString(TMDB_VOTE_AVG);
                 poster_path = resultsObject.getString(TMDB_POSTER);
 
-                resultStrs[i] =
-                        poster_path +
-                                "\nTitle: " + title +
-                                "\nPlot Summary: " + synopsis +
-                                "\nRelease Date: " + releaseDate +
-                                "\nAverage Vote (Out of 5): " + vote_average;
+                movies.add(i, new Movie(title, poster_path, releaseDate, vote_average, synopsis));
             }
 
-            return resultStrs;
+            return movies;
 
         }
 
         @Override
-        protected String[] doInBackground(String... params) {
+        protected ArrayList<Movie> doInBackground(String... params) {
             // These two need to be declared outside the try/catch
             // so that they can be closed in the finally block.
             HttpURLConnection urlConnection = null;
@@ -227,13 +250,16 @@ public class MoviesFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(String[] result) {
-            if (result != null) {
-                mMoviesAdapter.clear();
-                for (String movieResultStr : result) {
-                    mMoviesAdapter.add(movieResultStr);
-                }
+        protected void onPostExecute(ArrayList<Movie> movies) {
+            if (movies != null) {
+                adapter.addAll(movies);
             }
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArrayList("key", movies);
+        super.onSaveInstanceState(outState);
     }
 }

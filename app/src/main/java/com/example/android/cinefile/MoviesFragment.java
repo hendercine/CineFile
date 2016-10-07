@@ -36,7 +36,6 @@ public class MoviesFragment extends Fragment {
     //Keys for Intent to detail activity
     public static final String MOVIE_TITLE = "MOVIE_TITLE";
     public static final String MOVIE_POSTER = "MOVIE_POSTER";
-    //public static final String MOVIE_THUMB = "MOVIE_THUMB";
     public static final String MOVIE_BACKDROP = "MOVIE_BACKDROP";
     public static final String MOVIE_RELEASE = "MOVIE_RELEASE";
     public static final String MOVIE_VOTE_AVG = "MOVIE_VOTE_AVG";
@@ -194,11 +193,15 @@ public class MoviesFragment extends Fragment {
             // Will contain the raw JSON response as a string.
             String moviesJsonStr = null;
 
+            //Sort order passed in from Settings Activity
+            String sortOrder;
+            sortOrder = params[0];
+
             try {
                 // Construct the URL for the TheMovieDB query
                 final String MOVIE_BASE_URL =
                         "http://api.themoviedb.org/3/movie/";
-                final String SORT_PARAM = getString(R.string.pref_sort_default);
+                final String SORT_PARAM = sortOrder;
                 final String APPID_PARAM = "api_key";
                 final String LANG_PARAM = "language";
 

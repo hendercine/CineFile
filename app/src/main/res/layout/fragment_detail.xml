@@ -45,7 +45,7 @@
             android:layout_toRightOf="@+id/poster_image_view" />
         <LinearLayout
             android:id="@+id/rating_container"
-            style="@style/detail_rate"
+            style="@style/detail_release_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/poster_image_view"
@@ -54,7 +54,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/movie_rating_text"
+                android:id="@+id/movie_vote_avg_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display2"

@@ -27,6 +27,8 @@
     <!-- Value in SharedPreferences for top rated option [CHAR LIMIT=NONE] -->
     <string name="pref_sort_rated" translatable="false">top_rated</string>
 
+    <string name="pref_sort_description">Sort by Most Popular or Top Rated movies</string>
+
     <string name="action_share">Share</string>
     <string name="json_results">results</string>
     <string name="json_title">title</string>

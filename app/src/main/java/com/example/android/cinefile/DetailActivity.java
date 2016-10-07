@@ -3,7 +3,7 @@ package com.example.android.cinefile;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-public class DetailActivity extends ActionBarActivity {
+public class DetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class DetailActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            startActivity(new Intent(this, SettingsActivity.class));
+            startActivity(new Intent(this, SettingsActivity.SettingsFragment.class));
 
             return true;
         }
@@ -102,11 +102,11 @@ public class DetailActivity extends ActionBarActivity {
                 ((TextView) detailView.findViewById(R.id.movie_release_date_text))
                         .setText(movie_release);
                 //pass rating
-                String movie_rating = intent.getStringExtra("MOVIE_RATING");
-                ((TextView) detailView.findViewById(R.id.movie_rating_text))
+                String movie_rating = intent.getStringExtra("MOVIE_VOTE_AVG");
+                ((TextView) detailView.findViewById(R.id.movie_vote_avg_text))
                         .setText(movie_rating);
                 //pass overview
-                String movie_overview = intent.getStringExtra("MOVIE_OVERVIEW");
+                String movie_overview = intent.getStringExtra("MOVIE_PLOT_SUMMARY");
                 ((TextView) detailView.findViewById(R.id.movie_overview_text))
                         .setText(movie_overview);
             }

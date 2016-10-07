@@ -8,9 +8,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.android.cinefile.MoviesFragment">
 
-    <ListView
-        android:id="@+id/list_view_posters"
+    <GridView
+        android:id="@+id/grid_view_posters"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:numColumns="auto_fit"/>
 
 </FrameLayout>

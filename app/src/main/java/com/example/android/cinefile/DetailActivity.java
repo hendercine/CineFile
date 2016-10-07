@@ -3,17 +3,17 @@ package com.example.android.cinefile;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends ActionBarActivity {
 
@@ -60,9 +60,6 @@ public class DetailActivity extends ActionBarActivity {
 
         private static final String LOG_TAG = DetailFragment.class.getSimpleName();
 
-        private static final String FORECAST_SHARE_HASHTAG = " #SunshineApp";
-        private String mForecastStr;
-
         public DetailFragment() {
             setHasOptionsMenu(true);
         }
@@ -70,40 +67,50 @@ public class DetailActivity extends ActionBarActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+            View detailView = inflater.inflate(R.layout.fragment_detail, container, false);
             Intent intent = getActivity().getIntent();
-            View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
-            if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
-                mForecastStr = intent.getStringExtra(Intent.EXTRA_TEXT);
-                ((TextView) rootView.findViewById(R.id.detail_text))
-                        .setText(mForecastStr);
+            //pass title
+            if (intent != null && intent.hasExtra("MOVIE_TITLE")) {
+                String movie_title = intent.getStringExtra("MOVIE_TITLE");
+                ((TextView) detailView.findViewById(R.id.movie_title_text))
+                        .setText(movie_title);
+
+                // set activity title
+                getActivity().setTitle(movie_title);
+
+                //pass poster image
+                String movie_poster = intent.getStringExtra("MOVIE_POSTER");
+                Log.i(LOG_TAG, "poster URL: " + movie_poster);
+                ImageView poster = (ImageView) detailView.findViewById(R.id.poster_image_view);
+                Picasso
+                        .with(getActivity())
+                        .load(movie_poster)
+                        .fit()
+                        .into(poster);
+                //pass Backdrop image
+                String movie_backdrop = intent.getStringExtra("MOVIE_BACKDROP");
+                Log.i(LOG_TAG, "Backdrop URL: " + movie_backdrop);
+                ImageView backdrop = (ImageView) detailView.findViewById(R.id.backdrop_image_view);
+                Picasso
+                        .with(getContext())
+                        .load(movie_backdrop)
+                        .fit()
+                        .into(backdrop);
+
+                //pass release date
+                String movie_release = intent.getStringExtra("MOVIE_RELEASE");
+                ((TextView) detailView.findViewById(R.id.movie_release_date_text))
+                        .setText(movie_release);
+                //pass rating
+                String movie_rating = intent.getStringExtra("MOVIE_RATING");
+                ((TextView) detailView.findViewById(R.id.movie_rating_text))
+                        .setText(movie_rating);
+                //pass overview
+                String movie_overview = intent.getStringExtra("MOVIE_OVERVIEW");
+                ((TextView) detailView.findViewById(R.id.movie_overview_text))
+                        .setText(movie_overview);
             }
-
-            return rootView;
-        }
-
-        @Override
-        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-            inflater.inflate(R.menu.detail_fragment, menu);
-
-            MenuItem menuItem = menu.findItem(R.id.action_share);
-
-            ShareActionProvider mShareActionProvider =
-                    (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
-
-            if (mShareActionProvider != null) {
-                mShareActionProvider.setShareIntent(createShareForecastIntent());
-            } else {
-                Log.d(LOG_TAG, "Share Action Provider is null?");
-            }
-        }
-
-        private Intent createShareForecastIntent() {
-            Intent shareIntent = new Intent(Intent.ACTION_SEND);
-            shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
-            shareIntent.setType("text/plain");
-            shareIntent.putExtra(Intent.EXTRA_TEXT,
-                    mForecastStr + FORECAST_SHARE_HASHTAG);
-            return shareIntent;
+            return detailView;
         }
     }
 }

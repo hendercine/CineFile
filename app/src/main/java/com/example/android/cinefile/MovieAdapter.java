@@ -1,7 +1,6 @@
 package com.example.android.cinefile;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,31 +17,26 @@ import java.util.ArrayList;
 
 public class MovieAdapter extends ArrayAdapter<Movie> {
 
-    private Context context;
-
     public MovieAdapter(Activity context, ArrayList<Movie> movies) {
-        super(context, 0, movies);
-        this.context = context;
-    }
+        super( context, 0, movies); }
 
-
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        View listItemView = convertView;
-        if (listItemView == null) {
-            listItemView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_movie, parent, false);
+        Movie currentMovie = getItem(position);
+        String posterUrl = currentMovie.mMoviePoster;
+        ImageView moviePosterView;
+        View gridItemView = convertView;
+
+        if (gridItemView == null) {
+            gridItemView = LayoutInflater.from(getContext()).inflate(R.layout.grid_item_movie, parent, false);
         }
 
-        final Movie currentMovie = getItem(position);
+        moviePosterView = (ImageView) gridItemView;
+        moviePosterView.setAdjustViewBounds(true);
 
-        ImageView moviePosterIv = (ImageView) listItemView.findViewById(R.id.list_item_movie_poster);
-        String poster_base_url = "http://image.tmdb.org/t/p/w185/";
-        assert currentMovie != null;
-        String poster_url = currentMovie.getmMoviePoster();
-        String full_poster_url = poster_base_url + poster_url;
+        Picasso.with(getContext()).load(posterUrl).into(moviePosterView);
 
-        Picasso.with(context).load(full_poster_url).into(moviePosterIv);
-
-        return listItemView;
+        return moviePosterView;
     }
 }

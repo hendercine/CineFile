@@ -25,4 +25,43 @@
         <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
         <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="detail_overview">
+        <item name="android:layout_marginTop">@dimen/margin_large</item>
+        <item name="android:layout_marginLeft">@dimen/margin_large</item>
+        <item name="android:layout_marginRight">@dimen/margin_large</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
+
+    <style name="detail_thumb_image">
+        <item name ="android:layout_marginLeft">@dimen/margin_large</item>
+        <item name ="android:layout_marginTop">@dimen/details_thumb_margin_top</item>
+        <item name ="android:src">#9575CD</item>
+
+    </style>
+
+    <style name="detail_title">
+        <item name="android:layout_marginTop">@dimen/margin_default</item>
+        <item name="android:layout_marginRight">@dimen/margin_large</item>
+        <item name="android:layout_marginLeft">@dimen/margin_large</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
+        <item name="android:text">Movie Title</item>
+    </style>
+
+    <style name="detail_release">
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:layout_marginRight">@dimen/margin_default</item>
+        <item name="android:layout_marginLeft">@dimen/margin_large</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Subhead</item>
+        <item name="android:text">2015 released</item>
+    </style>
+
+    <style name="detail_rate">
+        <item name="android:layout_marginTop">-8dp</item>
+        <item name="android:layout_marginRight">@dimen/margin_default</item>
+        <item name="android:layout_marginLeft">@dimen/margin_large</item>
+        <item name="android:gravity">bottom</item>
+    </style>
+
 </resources>

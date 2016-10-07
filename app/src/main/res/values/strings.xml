@@ -16,7 +16,10 @@
     <string name="pref_sort_label_rated">Top Rated</string>
 
     <!-- Key name for sort order preference in SharedPreferences [CHAR LIMIT=NONE] -->
-    <string name="pref_sort_key" translatable="false">sort</string>
+    <string name="pref_sort_key" translatable="false">sort_by</string>
+
+    <!-- Value in SharedPreferences for most popular option [CHAR LIMIT=NONE] -->
+    <string name="pref_sort_default" translatable="false">popular</string>
 
     <!-- Value in SharedPreferences for most popular option [CHAR LIMIT=NONE] -->
     <string name="pref_sort_popular" translatable="false">popular</string>
@@ -31,5 +34,8 @@
     <string name="json_poster_path">poster_path</string>
     <string name="json_vote_avg">vote_average</string>
     <string name="json_plot_synop">overview</string>
+    <string name="json_backdrop_path">backdrop_path</string>
+
+    <string name="_10">/10</string>
 
 </resources>

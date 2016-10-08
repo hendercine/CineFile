@@ -80,35 +80,6 @@ public class MoviesFragment extends Fragment {
         return rootView;
     }
 
-    //           TODO: Remove or reuse the folded code below.
-
-//        // The ArrayAdapter will take data from a source and
-//        // use it to populate the ListView it's attached to.
-//        mMoviesAdapter =
-//                new ArrayAdapter<>(
-//                        getActivity(), // The current context (this activity)
-//                        R.layout.grid_item_movie, // The name of the layout ID.
-//                        R.id.grid_item_movie_poster, // The ID of the textview to populate.
-//                        new ArrayList<String>());
-//
-//        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-//
-//        // Get a reference to the ListView, and attach this adapter to it.
-//        ListView listView = (ListView) rootView.findViewById(R.id.grid_view_posters);
-//        listView.setAdapter(mMoviesAdapter);
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-//                String moviePoster = mMoviesAdapter.getItem(position);
-//                Intent intent = new Intent(getActivity(), DetailActivity.class)
-//                        .putExtra(Intent.EXTRA_TEXT, moviePoster);
-//                startActivity(intent);
-//            }
-//        });
-//
-//        return rootView;
-//    }
-//
     private void updateMovies() {
         FetchMoviesTask moviesTask = new FetchMoviesTask();
         moviesTask.setmMovieAdapter(mMovieAdapter);
@@ -145,8 +116,8 @@ public class MoviesFragment extends Fragment {
             final String TMDB_PLOT_SYNOPSIS = getString(R.string.json_plot_synop);
             final String TMDB_BACKDROP = getString(R.string.json_backdrop_path);
 
-            String posterBaseUrl = "http://image.tmdb.org/t/p/w185/";
-            String backdropBaseUrl = "http://image.tmdb.org/t/p/w342/";
+            String posterBaseUrl = getString(R.string.poster_base_url);
+            String backdropBaseUrl = getString(R.string.backdrop_base_url);
 
             JSONObject moviesJson = new JSONObject(movieJsonStr);
             JSONArray movieArray = moviesJson.getJSONArray(TMDB_RESULTS);
@@ -239,8 +210,8 @@ public class MoviesFragment extends Fragment {
 
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
-                // If the code didn't successfully get the weather data, there's no point in attemping
-                // to parse it.
+                // If the code didn't successfully get the movie data, there's no point in
+                // attempting to parse it.
                 return null;
             } finally {
                 if (urlConnection != null) {

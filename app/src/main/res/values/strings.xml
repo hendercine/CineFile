@@ -39,5 +39,9 @@
     <string name="json_backdrop_path">backdrop_path</string>
 
     <string name="_10">/10</string>
+    <string name="poster_base_url">http://image.tmdb.org/t/p/w185/</string>
+    <string name="backdrop_base_url">http://image.tmdb.org/t/p/w342/</string>
+    <string name="poster_thumbnail_description">Poster Thumbnail</string>
+    <string name="backdrop_image_description">BackDrop Image</string>
 
 </resources>

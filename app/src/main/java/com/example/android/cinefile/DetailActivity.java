@@ -45,7 +45,7 @@ public class DetailActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            startActivity(new Intent(this, SettingsActivity.SettingsFragment.class));
+            startActivity(new Intent(this, SettingsActivity.class));
 
             return true;
         }
@@ -81,13 +81,13 @@ public class DetailActivity extends AppCompatActivity {
                 //pass poster image
                 String movie_poster = intent.getStringExtra("MOVIE_POSTER");
                 Log.i(LOG_TAG, "poster URL: " + movie_poster);
-                ImageView poster = (ImageView) detailView.findViewById(R.id.poster_image_view);
+                ImageView poster = (ImageView) detailView.findViewById(R.id.detail_poster_image_view);
                 Picasso
                         .with(getActivity())
                         .load(movie_poster)
                         .fit()
                         .into(poster);
-                //pass Backdrop image
+                //pass backdrop image
                 String movie_backdrop = intent.getStringExtra("MOVIE_BACKDROP");
                 Log.i(LOG_TAG, "Backdrop URL: " + movie_backdrop);
                 ImageView backdrop = (ImageView) detailView.findViewById(R.id.backdrop_image_view);
@@ -101,11 +101,11 @@ public class DetailActivity extends AppCompatActivity {
                 String movie_release = intent.getStringExtra("MOVIE_RELEASE");
                 ((TextView) detailView.findViewById(R.id.movie_release_date_text))
                         .setText(movie_release);
-                //pass rating
+                //pass vote average
                 String movie_rating = intent.getStringExtra("MOVIE_VOTE_AVG");
                 ((TextView) detailView.findViewById(R.id.movie_vote_avg_text))
                         .setText(movie_rating);
-                //pass overview
+                //pass plot summary
                 String movie_overview = intent.getStringExtra("MOVIE_PLOT_SUMMARY");
                 ((TextView) detailView.findViewById(R.id.movie_overview_text))
                         .setText(movie_overview);

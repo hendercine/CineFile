@@ -10,7 +10,7 @@
     <dimen name="margin_default">8dp</dimen>
     <dimen name="margin_large">16dp</dimen>
 
-    <dimen name="details_poster_height">200dp</dimen>
+    <dimen name="details_backdrop_height">200dp</dimen>
     <dimen name="details_thumb_width">100dp</dimen>
     <dimen name="details_thumb_height">150dp</dimen>
     <dimen name="details_thumb_margin_top">172dp</dimen>

@@ -34,24 +34,6 @@ public class Movie implements Parcelable {
         mMovieBackDrop = in.readString();
     }
 
-    public String getmMovieTitle() { return mMovieTitle; }
-
-    public void setmMovieTitle(String mMovieTitle) {
-        this.mMovieTitle = "title";
-    }
-
-    public String getmMoviePoster() { return mMoviePoster; }
-
-    public void setmMoviePoster(String mMoviePoster) {
-        this.mMoviePoster = "poster";
-    }
-
-    public String getmReleaseDate() { return mReleaseDate; }
-
-    public String getmVoteAverage() { return mVoteAverage; }
-
-    public String getmMoviePlot() { return mMoviePlot; }
-
     @Override
     public int describeContents() { return 0; }
 

@@ -18,14 +18,8 @@
         <item name="android:stretchMode">columnWidth</item>
         <item name="android:gravity">center</item>
     </style>
-            <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-        <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-        <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="detail_overview">
+    <style name="detail_plot_summary">
         <item name="android:layout_marginTop">@dimen/margin_large</item>
         <item name="android:layout_marginLeft">@dimen/margin_large</item>
         <item name="android:layout_marginRight">@dimen/margin_large</item>

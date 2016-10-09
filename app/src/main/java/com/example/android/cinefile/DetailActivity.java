@@ -85,6 +85,8 @@ public class DetailActivity extends AppCompatActivity {
                 Picasso
                         .with(getActivity())
                         .load(movie_poster)
+                        .placeholder(R.drawable.placeholder)
+                        .error(R.drawable.placeholder)
                         .fit()
                         .into(poster);
                 //pass backdrop image
@@ -94,6 +96,8 @@ public class DetailActivity extends AppCompatActivity {
                 Picasso
                         .with(getContext())
                         .load(movie_backdrop)
+                        .placeholder(R.drawable.placeholder)
+                        .error(R.drawable.placeholder)
                         .fit()
                         .into(backdrop);
 

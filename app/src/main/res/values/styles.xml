@@ -44,7 +44,7 @@
     </style>
 
     <style name="detail_release">
-        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:layout_marginTop">@dimen/margin_default</item>
         <item name="android:layout_marginRight">@dimen/margin_default</item>
         <item name="android:layout_marginLeft">@dimen/margin_large</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Subhead</item>
@@ -52,7 +52,7 @@
     </style>
 
     <style name="detail_release_date">
-        <item name="android:layout_marginTop">-8dp</item>
+        <item name="android:layout_marginTop">@dimen/margin_default</item>
         <item name="android:layout_marginRight">@dimen/margin_default</item>
         <item name="android:layout_marginLeft">@dimen/margin_large</item>
         <item name="android:gravity">bottom</item>

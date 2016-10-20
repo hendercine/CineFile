@@ -43,5 +43,10 @@
     <string name="backdrop_base_url">http://image.tmdb.org/t/p/w342/</string>
     <string name="poster_thumbnail_description">Poster Thumbnail</string>
     <string name="backdrop_image_description">BackDrop Image</string>
+    <string name="out_of_ten_label">out_of_ten</string>
+    <string name="trailers_title">Trailers:</string>
+    <string name="trailer_1">Trailer 1</string>
+    <string name="trailer_2">Trailer 2</string>
+    <string name="place_holder_vote">10</string>
 
 </resources>

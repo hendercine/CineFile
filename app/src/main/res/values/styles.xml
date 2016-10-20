@@ -34,6 +34,14 @@
 
     </style>
 
+    <style name="detail_wide_thumb_image">
+        <item name ="android:layout_marginLeft">@dimen/margin_large</item>
+        <item name ="android:layout_marginTop">@dimen/details_wide_thumb_margin_top</item>
+        <item name="android:layout_marginBottom">@dimen/margin_default</item>
+        <item name ="android:src">#9575CD</item>
+
+    </style>
+
     <style name="detail_title">
         <item name="android:layout_marginTop">@dimen/margin_default</item>
         <item name="android:layout_marginRight">@dimen/margin_large</item>

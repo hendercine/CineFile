@@ -98,7 +98,9 @@ public class DetailActivity extends AppCompatActivity {
                         .load(movie_backdrop)
                         .placeholder(R.drawable.placeholder)
                         .error(R.drawable.placeholder)
-                        .fit()
+                        .resize(200, 250)
+                        .onlyScaleDown()
+                        .centerInside()
                         .into(backdrop);
 
                 //pass release date

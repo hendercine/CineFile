@@ -27,6 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/details_backdrop_height"
                 android:contentDescription="@string/backdrop_image_description"
+                android:scaleType="centerCrop"
                 android:src="@color/colorAccent" />
 
             <ImageView
@@ -37,7 +38,7 @@
                 android:contentDescription="@string/poster_thumbnail_description" />
 
             <LinearLayout
-                android:id="@+id/title_container"
+                android:id="@+id/movie_info_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/backdrop_image_view"
@@ -91,8 +92,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/backdrop_image_view"
-                android:layout_toRightOf="@id/title_container"
-                android:layout_toEndOf="@id/title_container"
+                android:layout_toRightOf="@id/movie_info_container"
+                android:layout_toEndOf="@id/movie_info_container"
                 android:text="@string/summary_placeholder_text"/>
 
         </RelativeLayout>

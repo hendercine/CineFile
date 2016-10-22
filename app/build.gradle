@@ -19,7 +19,7 @@ android {
     }
     buildTypes.each {
         //TODO: Insert your api_key below and remove before pushing
-        it.buildConfigField 'String', 'THE_MOVIES_DB_API_KEY', '"cbf5bac4419b2f27cf42b250fdd1240d"'
+        it.buildConfigField 'String', 'THE_MOVIES_DB_API_KEY', '""'
     }
 }
 

@@ -50,5 +50,7 @@
     <string name="place_holder_vote">10</string>
     <string name="summary_placeholder_text">A big screen remake of John Sturges\' classic western The Magnificent Seven, itself a remake of Akira Kurosawa\'s Seven Samurai. Seven gun men in the old west gradually come together to help a poor village against savage thieves.</string>
     <string name="reviews_btn_text">Reviews</string>
+    <string name="reviews_title">Reviews:</string>
+    <string name="no_reviews_message">No reviews yet.</string>
 
 </resources>

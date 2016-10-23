@@ -14,6 +14,6 @@
     <dimen name="details_wide_backdrop_height">152dp</dimen>
     <dimen name="details_thumb_width">100dp</dimen>
     <dimen name="details_thumb_height">150dp</dimen>
-    <dimen name="details_thumb_margin_top">140dp</dimen>
+    <dimen name="details_thumb_margin_top">88dp</dimen>
     <dimen name="details_wide_thumb_margin_top">112dp</dimen>
 </resources>

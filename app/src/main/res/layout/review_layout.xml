@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/default_item_spacing">
+
+    <TextView
+        android:id="@+id/author_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_item_spacing"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold|italic"
+        android:text="Catherine Astolfo"/>
+
+    <TextView
+        android:id="@+id/content_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Here's where a bunch of text will be that is the review. It will likely fill up a great deal of space, more than I can be bothered to type out at the moment. This amount of placeholder text will have to suffice."/>
+
+</LinearLayout>

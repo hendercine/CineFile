@@ -28,8 +28,7 @@
     </style>
 
     <style name="detail_wide_plot_summary">
-        <item name="android:layout_marginLeft">@dimen/default_item_spacing</item>
-        <item name="android:layout_marginRight">@dimen/default_item_spacing</item>
+        <item name="android:layout_margin">@dimen/default_item_spacing</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
         <item name="android:layout_centerHorizontal">true</item>
     </style>
@@ -37,7 +36,6 @@
     <style name="detail_thumb_image">
         <item name ="android:layout_marginLeft">@dimen/margin_large</item>
         <item name ="android:layout_marginTop">@dimen/details_thumb_margin_top</item>
-        <item name ="android:src">#9575CD</item>
 
     </style>
 
@@ -45,7 +43,7 @@
         <item name ="android:layout_marginLeft">@dimen/margin_large</item>
         <item name ="android:layout_marginTop">@dimen/details_wide_thumb_margin_top</item>
         <item name="android:layout_marginBottom">@dimen/margin_default</item>
-        <item name ="android:src">#9575CD</item>
+        <item name ="android:src">@drawable/placeholder_portrait</item>
 
     </style>
 
@@ -66,10 +64,10 @@
         <item name="android:text">2015 released</item>
     </style>
 
-    <style name="detail_release_date">
+    <style name="detail_vote_avg">
         <item name="android:layout_marginTop">@dimen/margin_default</item>
-        <item name="android:layout_marginRight">@dimen/margin_default</item>
-        <item name="android:layout_marginLeft">@dimen/margin_large</item>
+        <item name="android:layout_marginRight">@dimen/margin_large</item>
+        <item name="android:layout_marginLeft">@dimen/margin_default</item>
         <item name="android:gravity">bottom</item>
     </style>
 

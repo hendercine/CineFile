@@ -27,6 +27,13 @@
         <item name="android:layout_centerHorizontal">true</item>
     </style>
 
+    <style name="detail_wide_plot_summary">
+        <item name="android:layout_marginLeft">@dimen/default_item_spacing</item>
+        <item name="android:layout_marginRight">@dimen/default_item_spacing</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
+
     <style name="detail_thumb_image">
         <item name ="android:layout_marginLeft">@dimen/margin_large</item>
         <item name ="android:layout_marginTop">@dimen/details_thumb_margin_top</item>

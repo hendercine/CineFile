@@ -19,7 +19,7 @@
             android:id="@+id/detail_view_top"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="2">
+            android:layout_weight="1">
 
             <ImageView
                 android:id="@+id/backdrop_image_view"
@@ -96,14 +96,13 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <ImageButton
+                    <CheckBox
                         android:id="@+id/fav_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_margin="@dimen/margin_large"
-                        android:background="@android:color/white"
-                        android:src="@android:drawable/btn_star_big_off"/>
+                        android:button="@drawable/fav_button" />
 
                     <Button
                         android:id="@+id/reviews_btn"
@@ -125,6 +124,7 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/detail_view_bottom"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -133,7 +133,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_margin="8dp"
+                android:layout_margin="@dimen/default_item_spacing"
                 android:background="@android:color/black" />
 
             <TextView
@@ -143,56 +143,64 @@
                 android:text="@string/trailers_title"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-            <LinearLayout
-                android:id="@+id/trailer_1_btn"
-                android:layout_width="match_parent"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/trailers_recycler"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:orientation="horizontal">
+                android:layout_margin="@dimen/default_item_spacing"
+                tools:listitem="@layout/trailer_layout" />
 
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginLeft="@dimen/margin_large"
-                    android:layout_marginStart="@dimen/margin_large"
-                    android:background="@android:color/black"
-                    android:src="@android:drawable/ic_media_play" />
+            <!--<LinearLayout-->
+                <!--android:id="@+id/trailer_1_btn"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginBottom="@dimen/activity_vertical_margin"-->
+                <!--android:orientation="horizontal">-->
 
-                <TextView
-                    style="@style/detail_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/trailer_1" />
+                <!--<ImageView-->
+                    <!--android:layout_width="48dp"-->
+                    <!--android:layout_height="48dp"-->
+                    <!--android:layout_marginLeft="@dimen/margin_large"-->
+                    <!--android:layout_marginStart="@dimen/margin_large"-->
+                    <!--android:background="@android:color/black"-->
+                    <!--android:src="@android:drawable/ic_media_play" />-->
 
-            </LinearLayout>
+                <!--<TextView-->
+                    <!--style="@style/detail_title"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/trailer_1" />-->
+
+            <!--</LinearLayout>-->
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_margin="8dp"
+                android:layout_margin="@dimen/default_item_spacing"
                 android:background="@android:color/black" />
 
-            <LinearLayout
-                android:id="@+id/trailer_2_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:orientation="horizontal">
+            <!--<LinearLayout-->
+                <!--android:id="@+id/trailer_2_btn"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="@dimen/activity_vertical_margin"-->
+                <!--android:orientation="horizontal">-->
 
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginLeft="@dimen/margin_large"
-                    android:background="@android:color/black"
-                    android:src="@android:drawable/ic_media_play" />
+                <!--<ImageView-->
+                    <!--android:layout_width="48dp"-->
+                    <!--android:layout_height="48dp"-->
+                    <!--android:layout_marginLeft="@dimen/margin_large"-->
+                    <!--android:layout_marginStart="@dimen/margin_large"-->
+                    <!--android:background="@android:color/black"-->
+                    <!--android:src="@android:drawable/ic_media_play" />-->
 
-                <TextView
-                    style="@style/detail_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/trailer_2" />
+                <!--<TextView-->
+                    <!--style="@style/detail_title"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/trailer_2" />-->
 
-            </LinearLayout>
+            <!--</LinearLayout>-->
         </LinearLayout>
 
     </LinearLayout>

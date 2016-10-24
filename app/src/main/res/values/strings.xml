@@ -52,5 +52,7 @@
     <string name="reviews_btn_text">Reviews</string>
     <string name="reviews_title">Reviews:</string>
     <string name="no_reviews_message">No reviews yet.</string>
+    <string name="api_movie_id">id</string>
+    <string name="trailer_path">videos</string>
 
 </resources>

@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.example.android.cinefile.data.Movie;
+import com.example.android.cinefile.sync.MovieAdapter;
+
 import java.util.ArrayList;
 
 /**

@@ -4,6 +4,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.android.cinefile.data.Movie;
+import com.example.android.cinefile.sync.MovieAdapter;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,6 +47,8 @@ public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
         final String TMDB_POSTER = moviesFragment.getString(R.string.json_poster_path);
         final String TMDB_PLOT_SYNOPSIS = moviesFragment.getString(R.string.json_plot_synop);
         final String TMDB_BACKDROP = moviesFragment.getString(R.string.json_backdrop_path);
+        final String TMDB_ID = moviesFragment.getString(R.string.api_movie_id);
+        final String TMDB_TRAILER = moviesFragment.getString(R.string.trailer_path);
 
         String posterBaseUrl = moviesFragment.getString(R.string.poster_base_url);
         String backdropBaseUrl = moviesFragment.getString(R.string.backdrop_base_url);
@@ -60,6 +65,7 @@ public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
             String voteAverage;
             String posterPath;
             String backDrop;
+            String trailerPath;
 
             // Get the JSON object representing the movie
             JSONObject currentMovie = movieArray.getJSONObject(i);
@@ -69,9 +75,10 @@ public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
             voteAverage = currentMovie.getString(TMDB_VOTE_AVG);
             posterPath = posterBaseUrl + currentMovie.getString(TMDB_POSTER);
             backDrop = backdropBaseUrl + currentMovie.getString(TMDB_BACKDROP);
+            trailerPath = currentMovie.getString(TMDB_ID) + "/" + currentMovie.getString(TMDB_TRAILER);
 
             Movie movie =
-                    new Movie(title, posterPath, releaseDate, voteAverage, moviePlot, backDrop);
+                    new Movie(title, posterPath, releaseDate, voteAverage, moviePlot, backDrop, trailerPath);
             movieResults.add(movie);
         }
 

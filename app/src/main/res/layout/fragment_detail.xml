@@ -25,14 +25,14 @@
                 android:id="@+id/backdrop_image_view"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/details_backdrop_height"
-                android:scaleType="centerCrop"
                 android:contentDescription="@string/backdrop_image_description"
+                android:scaleType="centerCrop"
                 android:src="@drawable/placeholder" />
 
             <include
-                layout="@layout/poster_layout"
                 android:id="@+id/detail_poster_image_view"
                 style="@style/detail_thumb_image"
+                layout="@layout/poster_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/poster_thumbnail_description" />
@@ -41,12 +41,12 @@
                 android:id="@+id/fav_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_large"
-                android:padding="@dimen/default_item_spacing"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
                 android:layout_above="@+id/movie_info_container"
-                android:button="@drawable/fav_button" />
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_margin="@dimen/margin_large"
+                android:button="@drawable/fav_button"
+                android:padding="@dimen/default_item_spacing" />
 
             <LinearLayout
                 android:id="@+id/movie_info_container"
@@ -105,13 +105,14 @@
                 </LinearLayout>
 
             </LinearLayout>
+
             <TextView
                 android:id="@+id/movie_overview_text"
                 style="@style/detail_plot_summary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/detail_poster_image_view"
-                android:text="@string/summary_placeholder_text"/>
+                android:text="@string/summary_placeholder_text" />
         </RelativeLayout>
 
         <LinearLayout
@@ -130,10 +131,10 @@
 
             <TextView
                 android:id="@+id/trailers_title"
+                style="@style/detail_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/trailers_title"
-                style="@style/detail_title" />
+                android:text="@string/trailers_title" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/trailers_recycler"

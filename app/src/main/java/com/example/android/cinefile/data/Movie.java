@@ -1,4 +1,4 @@
-package com.example.android.cinefile;
+package com.example.android.cinefile.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -15,14 +15,16 @@ public class Movie implements Parcelable {
     public String mVoteAverage;
     public String mMoviePlot;
     public String mMovieBackDrop;
+    public String mTrailer;
 
-    public Movie(String movieTitle, String moviePoster, String releaseDate, String voteAverage, String moviePlot, String backDrop) {
+    public Movie(String movieTitle, String moviePoster, String releaseDate, String voteAverage, String moviePlot, String backDrop, String trailer) {
         this.mMovieTitle = movieTitle;
         this.mMoviePoster = moviePoster;
         this.mReleaseDate = releaseDate;
         this.mVoteAverage = voteAverage;
         this.mMoviePlot = moviePlot;
         this.mMovieBackDrop = backDrop;
+        this.mTrailer = trailer;
     }
 
     private Movie(Parcel in) {
@@ -32,6 +34,7 @@ public class Movie implements Parcelable {
         mVoteAverage = in.readString();
         mMoviePlot = in.readString();
         mMovieBackDrop = in.readString();
+        mTrailer = in.readString();
     }
 
     @Override
@@ -45,6 +48,7 @@ public class Movie implements Parcelable {
         out.writeString(mVoteAverage);
         out.writeString(mMoviePlot);
         out.writeString(mMovieBackDrop);
+        out.writeString(mTrailer);
     }
 
     public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {

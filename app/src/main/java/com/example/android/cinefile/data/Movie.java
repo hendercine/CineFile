@@ -3,6 +3,8 @@ package com.example.android.cinefile.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 /**
  * Created by Hendercine on 10/6/16.
  */
@@ -15,16 +17,19 @@ public class Movie implements Parcelable {
     public String mVoteAverage;
     public String mMoviePlot;
     public String mMovieBackDrop;
-    public String mTrailer;
+    public ArrayList<Trailer> mMovieTrailer = new ArrayList<>();
 
-    public Movie(String movieTitle, String moviePoster, String releaseDate, String voteAverage, String moviePlot, String backDrop, String trailer) {
+    public Movie(String movieTitle, String moviePoster, String releaseDate, String voteAverage, String moviePlot, String backDrop) {
         this.mMovieTitle = movieTitle;
         this.mMoviePoster = moviePoster;
         this.mReleaseDate = releaseDate;
         this.mVoteAverage = voteAverage;
         this.mMoviePlot = moviePlot;
         this.mMovieBackDrop = backDrop;
-        this.mTrailer = trailer;
+    }
+
+    public Movie(ArrayList<Trailer> trailer) {
+        this.mMovieTrailer = trailer;
     }
 
     private Movie(Parcel in) {
@@ -34,7 +39,7 @@ public class Movie implements Parcelable {
         mVoteAverage = in.readString();
         mMoviePlot = in.readString();
         mMovieBackDrop = in.readString();
-        mTrailer = in.readString();
+        in.readTypedList(mMovieTrailer, Trailer.CREATOR);
     }
 
     @Override
@@ -48,7 +53,7 @@ public class Movie implements Parcelable {
         out.writeString(mVoteAverage);
         out.writeString(mMoviePlot);
         out.writeString(mMovieBackDrop);
-        out.writeString(mTrailer);
+        out.writeTypedList(mMovieTrailer);
     }
 
     public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
@@ -56,4 +61,8 @@ public class Movie implements Parcelable {
 
         public Movie[] newArray(int size) { return new Movie[size]; }
     };
+
+    public ArrayList<Trailer> getMovieTrailer() {
+        return mMovieTrailer;
+    }
 }

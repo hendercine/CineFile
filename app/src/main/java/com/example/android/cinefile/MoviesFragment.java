@@ -21,7 +21,6 @@ import java.util.ArrayList;
  */
 public class MoviesFragment extends Fragment {
 
-    private GridView mGridView;
     private MovieAdapter mMovieAdapter;
     //Keys for Intent to detail activity
     public static final String MOVIE_TITLE = "MOVIE_TITLE";
@@ -30,6 +29,7 @@ public class MoviesFragment extends Fragment {
     public static final String MOVIE_RELEASE = "MOVIE_RELEASE";
     public static final String MOVIE_VOTE_AVG = "MOVIE_VOTE_AVG";
     public static final String MOVIE_PLOT_SUMMARY = "MOVIE_PLOT_SUMMARY";
+    public static final String MOVIE_TRAILER = "MOVIE_TRAILER";
 
     //ArrayList of movies
     public ArrayList<Movie> movies = new ArrayList<>();
@@ -49,7 +49,7 @@ public class MoviesFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        mGridView= (GridView) rootView.findViewById(R.id.grid_view_posters);
+        GridView mGridView = (GridView) rootView.findViewById(R.id.grid_view_posters);
         mMovieAdapter = new MovieAdapter(getActivity(), movies);
         mGridView.setAdapter(mMovieAdapter);
 
@@ -62,7 +62,8 @@ public class MoviesFragment extends Fragment {
                         putExtra(MOVIE_BACKDROP, movies.get(position).mMovieBackDrop).
                         putExtra(MOVIE_RELEASE, movies.get(position).mReleaseDate).
                         putExtra(MOVIE_VOTE_AVG, movies.get(position).mVoteAverage).
-                        putExtra(MOVIE_PLOT_SUMMARY, movies.get(position).mMoviePlot);
+                        putExtra(MOVIE_PLOT_SUMMARY, movies.get(position).mMoviePlot).
+                        putExtra(MOVIE_TRAILER, movies.get(position).mMovieTrailer);
                 startActivity(intent);
             }
         });

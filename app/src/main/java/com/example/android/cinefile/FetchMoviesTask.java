@@ -65,7 +65,7 @@ public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
             String voteAverage;
             String posterPath;
             String backDrop;
-            String trailerPath;
+//            String trailerPath;
 
             // Get the JSON object representing the movie
             JSONObject currentMovie = movieArray.getJSONObject(i);
@@ -75,10 +75,10 @@ public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
             voteAverage = currentMovie.getString(TMDB_VOTE_AVG);
             posterPath = posterBaseUrl + currentMovie.getString(TMDB_POSTER);
             backDrop = backdropBaseUrl + currentMovie.getString(TMDB_BACKDROP);
-            trailerPath = currentMovie.getString(TMDB_ID) + "/" + currentMovie.getString(TMDB_TRAILER);
+//            trailerPath = currentMovie.getString(TMDB_ID) + "/" + currentMovie.getString(TMDB_TRAILER);
 
             Movie movie =
-                    new Movie(title, posterPath, releaseDate, voteAverage, moviePlot, backDrop, trailerPath);
+                    new Movie(title, posterPath, releaseDate, voteAverage, moviePlot, backDrop);
             movieResults.add(movie);
         }
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,8 +20,8 @@
             android:id="@+id/detail_view_top"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="7"
-            android:layout_marginBottom="@dimen/default_item_spacing">
+            android:layout_marginBottom="@dimen/default_item_spacing"
+            android:layout_weight="7">
 
             <ImageView
                 android:id="@+id/backdrop_image_view"
@@ -30,22 +31,31 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/placeholder" />
 
-            <include
-                layout="@layout/poster_layout"
-                android:id="@+id/detail_poster_image_view"
-                style="@style/detail_wide_thumb_image"
+            <android.support.v7.widget.CardView
+                android:id="@+id/detail_poster_card_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/poster_thumbnail_description" />
+                app:cardBackgroundColor="@color/cardview_light_background">
+
+                <ImageView
+                    android:id="@+id/detail_poster_image_view"
+                    style="@style/detail_thumb_image"
+                    android:layout_width="@dimen/details_thumb_width"
+                    android:layout_height="@dimen/details_thumb_height"
+                    android:contentDescription="@string/poster_thumbnail_description"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/placeholder_portrait" />
+
+            </android.support.v7.widget.CardView>
 
             <CheckBox
                 android:id="@+id/fav_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
                 android:layout_above="@id/movie_overview_text"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center"
                 android:layout_margin="@dimen/margin_large"
                 android:button="@drawable/fav_button" />
 
@@ -112,12 +122,12 @@
                 style="@style/detail_wide_plot_summary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/backdrop_image_view"
-                android:layout_toRightOf="@id/movie_info_container"
-                android:layout_toEndOf="@id/movie_info_container"
                 android:layout_alignBottom="@id/movie_info_container"
+                android:layout_below="@id/backdrop_image_view"
+                android:layout_toEndOf="@id/movie_info_container"
+                android:layout_toRightOf="@id/movie_info_container"
                 android:gravity="bottom"
-                android:text="@string/summary_placeholder_text"/>
+                android:text="@string/summary_placeholder_text" />
 
         </RelativeLayout>
 
@@ -137,10 +147,10 @@
 
             <TextView
                 android:id="@+id/trailers_title"
+                style="@style/detail_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/trailers_title"
-                style="@style/detail_title" />
+                android:text="@string/trailers_title" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/trailers_recycler"
@@ -155,8 +165,8 @@
             android:id="@+id/reviews_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:orientation="vertical">
 
             <View

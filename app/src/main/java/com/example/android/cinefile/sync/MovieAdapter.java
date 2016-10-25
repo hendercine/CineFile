@@ -27,18 +27,18 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
 
         Movie currentMovie = getItem(position);
         String posterUrl = currentMovie.mMoviePoster;
-        ImageView moviePosterView;
+        ImageView gridPosterView;
         View gridItemView = convertView;
 
         if (gridItemView == null) {
             gridItemView = LayoutInflater.from(getContext()).inflate(R.layout.grid_item_movie, parent, false);
         }
 
-        moviePosterView = (ImageView) gridItemView;
-        moviePosterView.setAdjustViewBounds(true);
+        gridPosterView = (ImageView) gridItemView;
+        gridPosterView.setAdjustViewBounds(true);
 
-        Picasso.with(getContext()).load(posterUrl).into(moviePosterView);
+        Picasso.with(getContext()).load(posterUrl).into(gridPosterView);
 
-        return moviePosterView;
+        return gridPosterView;
     }
 }

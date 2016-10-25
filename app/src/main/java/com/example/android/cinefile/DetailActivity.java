@@ -1,9 +1,13 @@
 package com.example.android.cinefile;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,6 +17,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.android.cinefile.data.Movie;
+import com.example.android.cinefile.sync.TrailerAdapter;
 import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends AppCompatActivity {
@@ -58,6 +64,7 @@ public class DetailActivity extends AppCompatActivity {
      */
     public static class DetailFragment extends Fragment {
 
+        private Movie mMovie;
         private static final String LOG_TAG = DetailFragment.class.getSimpleName();
 
         public DetailFragment() {
@@ -74,25 +81,26 @@ public class DetailActivity extends AppCompatActivity {
                 String movie_title = intent.getStringExtra("MOVIE_TITLE");
                 ((TextView) detailView.findViewById(R.id.movie_title_text))
                         .setText(movie_title);
-
                 // set activity title
                 getActivity().setTitle(movie_title);
-
                 //pass poster image
                 String movie_poster = intent.getStringExtra("MOVIE_POSTER");
                 Log.i(LOG_TAG, "poster URL: " + movie_poster);
-                ImageView poster = (ImageView) detailView.findViewById(R.id.detail_poster_image_view);
+                ImageView poster =
+                        (ImageView) detailView
+                        .findViewById(R.id.detail_poster_image_view);
                 Picasso
                         .with(getActivity())
                         .load(movie_poster)
-                        .placeholder(R.drawable.placeholder)
-                        .error(R.drawable.placeholder)
+                        .placeholder(R.drawable.placeholder_portrait)
+                        .error(R.drawable.placeholder_portrait)
                         .fit()
                         .into(poster);
                 //pass backdrop image
                 String movie_backdrop = intent.getStringExtra("MOVIE_BACKDROP");
                 Log.i(LOG_TAG, "Backdrop URL: " + movie_backdrop);
-                ImageView backdrop = (ImageView) detailView.findViewById(R.id.backdrop_image_view);
+                ImageView backdrop =
+                        (ImageView) detailView.findViewById(R.id.backdrop_image_view);
                 Picasso
                         .with(getContext())
                         .load(movie_backdrop)
@@ -102,7 +110,6 @@ public class DetailActivity extends AppCompatActivity {
                         .onlyScaleDown()
                         .centerInside()
                         .into(backdrop);
-
                 //pass release date
                 String movie_release = intent.getStringExtra("MOVIE_RELEASE");
                 ((TextView) detailView.findViewById(R.id.movie_release_date_text))
@@ -115,6 +122,40 @@ public class DetailActivity extends AppCompatActivity {
                 String movie_overview = intent.getStringExtra("MOVIE_PLOT_SUMMARY");
                 ((TextView) detailView.findViewById(R.id.movie_overview_text))
                         .setText(movie_overview);
+                //pass trailer
+                String movie_trailer = intent.getStringExtra("MOVIE_TRAILER");
+                if (mMovie.getMovieTrailer().size() != 0) {
+                    RecyclerView trailerRecyclerView =
+                            (RecyclerView) detailView.findViewById(R.id.trailers_recycler);
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(
+                            getActivity(),
+                            LinearLayoutManager.HORIZONTAL,
+                            false);
+                    if (trailerRecyclerView != null) {
+                        trailerRecyclerView.setHasFixedSize(false);
+                        trailerRecyclerView.setLayoutManager(layoutManager);
+                        TrailerAdapter trailerAdapter = new TrailerAdapter(
+                                mMovie.getMovieTrailer(),
+                                getActivity());
+                        trailerRecyclerView.setAdapter(trailerAdapter);
+                        trailerAdapter.setOnItemClickListener(new TrailerAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+                                Intent trailerIntent = new Intent(Intent.ACTION_VIEW);
+                                trailerIntent.setData(Uri.parse("https://www.youtube.com/watch?v="
+                                        + mMovie.getMovieTrailer().get(position).getmTrailerKey()));
+                                if (trailerIntent
+                                        .resolveActivity(getActivity()
+                                        .getPackageManager()) != null)
+                                    startActivity(trailerIntent);
+                                else Snackbar.make(getView().findViewById(R.id.parent_scrollView),
+                                        R.string.no_browser_msg,
+                                        Snackbar.LENGTH_LONG)
+                                        .show();
+                            }
+                        });
+                    } else detailView.findViewById(R.id.noTrailers_textView).setVisibility(View.VISIBLE);
+                }
             }
             return detailView;
         }

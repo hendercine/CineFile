@@ -1,4 +1,4 @@
-package com.example.android.cinefile.data;
+package com.example.android.cinefile.Objects;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -37,8 +37,15 @@ public class Trailer implements Parcelable {
         return mTrailerKey;
     }
 
+    public void setmTrailerKey(String mTrailerKey) {
+        this.mTrailerKey = mTrailerKey;
+    }
+
     public String getmTrailerName() {
         return mTrailerName;
     }
 
+    public void setmTrailerName(String mTrailerName) {
+        this.mTrailerName = mTrailerName;
+    }
 }

@@ -1,4 +1,4 @@
-package com.example.android.cinefile.sync;
+package com.example.android.cinefile.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.cinefile.R;
-import com.example.android.cinefile.data.Trailer;
+import com.example.android.cinefile.Objects.Trailer;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

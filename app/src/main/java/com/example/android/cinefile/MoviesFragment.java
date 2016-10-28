@@ -86,14 +86,13 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
                         null,
                         null,
                         null);
-        assert cursor != null;
-        if (cursor.getCount() == 0) {
+        if (cursor != null && cursor.getCount() == 0) {
             updateMovies();
+            cursor.close();
         }
         // Initialize loader
         getLoaderManager().initLoader(CURSOR_LOADER_ID, null, this);
         super.onActivityCreated(savedInstanceState);
-        cursor.close();
     }
 
 

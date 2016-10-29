@@ -56,7 +56,7 @@
     <string name="trailer_path">videos</string>
     <string name="no_browser_msg">Please install a web browser or the Youtube app and retry.</string>
     <string name="no_trailers_yet">No trailers yet!</string>
-    <string name="content_authority">com.example.android.cinefile.app</string>
+    <string name="content_authority">com.example.android.cinefile</string>
     <string name="sync_account_type">cinefile.example.com</string>
 
 </resources>

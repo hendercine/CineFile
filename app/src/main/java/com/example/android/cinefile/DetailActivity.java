@@ -120,41 +120,46 @@ public class DetailActivity extends AppCompatActivity {
                         .setText(movie_rating);
                 //pass plot summary
                 String movie_overview = intent.getStringExtra("MOVIE_PLOT_SUMMARY");
-                ((TextView) detailView.findViewById(R.id.movie_overview_text))
+                ((TextView) detailView.findViewById(R.id.movie_summary_text))
                         .setText(movie_overview);
                 //pass trailer
-                String movie_trailer = intent.getStringExtra("MOVIE_TRAILER");
-                if (mMovie.getMovieTrailer().size() != 0) {
-                    RecyclerView trailerRecyclerView =
-                            (RecyclerView) detailView.findViewById(R.id.trailers_recycler);
-                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(
-                            getActivity(),
-                            LinearLayoutManager.HORIZONTAL,
-                            false);
-                    if (trailerRecyclerView != null) {
-                        trailerRecyclerView.setHasFixedSize(false);
-                        trailerRecyclerView.setLayoutManager(layoutManager);
-                        TrailerAdapter trailerAdapter = new TrailerAdapter(
-                                mMovie.getMovieTrailer(),
-                                getActivity());
-                        trailerRecyclerView.setAdapter(trailerAdapter);
-                        trailerAdapter.setOnItemClickListener(new TrailerAdapter.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(View view, int position) {
-                                Intent trailerIntent = new Intent(Intent.ACTION_VIEW);
-                                trailerIntent.setData(Uri.parse("https://www.youtube.com/watch?v="
-                                        + mMovie.getMovieTrailer().get(position).getmTrailerKey()));
-                                if (trailerIntent
-                                        .resolveActivity(getActivity()
-                                        .getPackageManager()) != null)
-                                    startActivity(trailerIntent);
-                                else Snackbar.make(getView().findViewById(R.id.parent_scrollView),
-                                        R.string.no_browser_msg,
-                                        Snackbar.LENGTH_LONG)
-                                        .show();
-                            }
-                        });
-                    } else detailView.findViewById(R.id.noTrailers_textView).setVisibility(View.VISIBLE);
+                final String movie_trailer = intent.getStringExtra("MOVIE_TRAILER");
+
+                if (mMovie != null) {
+                    if (mMovie.getMovieTrailer().size() != 0) {
+                        RecyclerView trailerRecyclerView =
+                                (RecyclerView) detailView.findViewById(R.id.trailers_recycler);
+                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(
+                                getActivity(),
+                                LinearLayoutManager.HORIZONTAL,
+                                false);
+                        if (trailerRecyclerView != null) {
+                            trailerRecyclerView.setHasFixedSize(false);
+                            trailerRecyclerView.setLayoutManager(layoutManager);
+                            TrailerAdapter trailerAdapter = new TrailerAdapter(
+                                    mMovie.getMovieTrailer(),
+                                    getActivity());
+                            trailerRecyclerView.setAdapter(trailerAdapter);
+                            trailerAdapter.setOnItemClickListener(new TrailerAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(View view, int position) {
+                                    Intent trailerIntent = new Intent(movie_trailer);
+                                    trailerIntent.setData(Uri.parse("https://www.youtube.com/watch?v="
+                                            + mMovie.getMovieTrailer().get(position).getmTrailerKey()));
+                                    if (trailerIntent
+                                            .resolveActivity(getActivity()
+                                                    .getPackageManager()) != null)
+                                        startActivity(trailerIntent);
+                                    else
+                                        Snackbar.make(getView().findViewById(R.id.parent_scrollView),
+                                                R.string.no_browser_msg,
+                                                Snackbar.LENGTH_LONG)
+                                                .show();
+                                }
+                            });
+                        } else
+                            detailView.findViewById(R.id.noTrailers_textView).setVisibility(View.VISIBLE);
+                    }
                 }
             }
             return detailView;

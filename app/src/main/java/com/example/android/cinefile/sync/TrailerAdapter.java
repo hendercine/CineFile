@@ -21,12 +21,12 @@ import java.util.ArrayList;
 public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.ViewHolder> {
 
     private static OnItemClickListener mItemClickListener;
-    private ArrayList<Trailer> mDataset;
+    private ArrayList<Trailer> mTrailers;
     private Context mContext;
 
-    public TrailerAdapter(ArrayList<Trailer> myDataset, Context myContext) {
-        mDataset = myDataset;
-        mContext = myContext;
+    public TrailerAdapter(ArrayList<Trailer> trailers, Context context) {
+        mTrailers = trailers;
+        mContext = context;
     }
 
     @Override
@@ -39,19 +39,19 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.ViewHold
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         Picasso.with(mContext).
-                load("http://img.youtube.com/vi/" + mDataset.get(position).getmTrailerKey() + "/0.jpg").
+                load("http://img.youtube.com/vi/" + mTrailers.get(position).getmTrailerKey() + "/0.jpg").
                 into(holder.mImageViewThumbnail);
-        holder.mTextViewTitle.setText(mDataset.get(position).getmTrailerName());
+        holder.mTextViewTitle.setText(mTrailers.get(position).getmTrailerName());
     }
 
     @Override
     public int getItemCount() {
-        return mDataset.size();
+        return mTrailers.size();
     }
 
-    public void swap(ArrayList<Trailer> newDataset) {
-        mDataset.clear();
-        mDataset.addAll(newDataset);
+    public void swap(ArrayList<Trailer> newTrailerList) {
+        mTrailers.clear();
+        mTrailers.addAll(newTrailerList);
         notifyDataSetChanged();
     }
 

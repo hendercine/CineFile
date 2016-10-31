@@ -53,8 +53,10 @@
     <string name="reviews_title">Reviews:</string>
     <string name="no_reviews_message">No reviews yet.</string>
     <string name="api_movie_id">id</string>
-    <string name="trailer_path">videos</string>
+    <string name="trailer_path">/videos?</string>
     <string name="no_browser_msg">Please install a web browser or the Youtube app and retry.</string>
     <string name="no_trailers_yet">No trailers yet!</string>
+    <string name="trailer_key">key</string>
+    <string name="trailer_name">name</string>
 
 </resources>

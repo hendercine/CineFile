@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.example.android.cinefile.data.Movie;
+import com.example.android.cinefile.sync.FetchMoviesTask;
 import com.example.android.cinefile.sync.MovieAdapter;
 
 import java.util.ArrayList;
@@ -63,7 +64,7 @@ public class MoviesFragment extends Fragment {
                         putExtra(MOVIE_RELEASE, movies.get(position).mReleaseDate).
                         putExtra(MOVIE_VOTE_AVG, movies.get(position).mVoteAverage).
                         putExtra(MOVIE_PLOT_SUMMARY, movies.get(position).mMoviePlot).
-                        putExtra(MOVIE_TRAILER, movies.get(position).mMovieTrailer);
+                        putExtra(MOVIE_TRAILER, movies.get(position).mTrailerPath);
                 startActivity(intent);
             }
         });
@@ -73,7 +74,7 @@ public class MoviesFragment extends Fragment {
 
     private void updateMovies() {
         FetchMoviesTask moviesTask = new FetchMoviesTask(this);
-        moviesTask.setmMovieAdapter(mMovieAdapter);
+        moviesTask.setMovieAdapter(mMovieAdapter);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String sortOrder = prefs.getString(getString(R.string.pref_sort_key),
                 getString(R.string.pref_sort_default));

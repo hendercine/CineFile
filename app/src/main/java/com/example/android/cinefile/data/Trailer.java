@@ -11,6 +11,11 @@ public class Trailer implements Parcelable {
 
     private String mTrailerName, mTrailerKey;
 
+    public Trailer(String trailerKey, String trailerName) {
+        this.mTrailerKey = trailerKey;
+        this.mTrailerName = trailerName;
+    }
+
     private Trailer(Parcel in) {
         mTrailerName = in.readString();
         mTrailerKey = in.readString();
@@ -33,11 +38,11 @@ public class Trailer implements Parcelable {
         public Trailer[] newArray(int size) { return new Trailer[size]; }
     };
 
-    public String getmTrailerKey() {
+    public String getTrailerKey() {
         return mTrailerKey;
     }
 
-    public String getmTrailerName() {
+    public String getTrailerName() {
         return mTrailerName;
     }
 

@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.android.cinefile.data.Movie;
+import com.example.android.cinefile.data.Trailer;
 import com.example.android.cinefile.sync.TrailerAdapter;
 import com.squareup.picasso.Picasso;
 
@@ -23,7 +23,7 @@ import com.squareup.picasso.Picasso;
  */
 public class DetailFragment extends Fragment {
 
-    private Movie mMovie = null;
+    private Trailer mTrailer = null;
     private static final String LOG_TAG = DetailFragment.class.getSimpleName();
     RecyclerView trailerRecyclerView;
 
@@ -84,13 +84,10 @@ public class DetailFragment extends Fragment {
                     .setText(movie_overview);
             //pass trailer
             final String movie_trailer = intent.getStringExtra("MOVIE_TRAILER");
-
-            if (mMovie != null) {
-                if (mMovie.getMovieTrailer().size() != 0) {
                     trailerRecyclerView =
                             (RecyclerView) detailView.findViewById(R.id.trailers_recycler);
                     TrailerAdapter trailerAdapter = new TrailerAdapter(
-                            mMovie.getMovieTrailer(),
+                            null,
                             getContext());
                     if (trailerRecyclerView != null) {
                         trailerRecyclerView.setHasFixedSize(false);
@@ -101,7 +98,7 @@ public class DetailFragment extends Fragment {
                             public void onItemClick(View view, int position) {
                                 Intent trailerIntent = new Intent(movie_trailer);
                                 trailerIntent.setData(Uri.parse("https://www.youtube.com/watch?v="
-                                        + mMovie.getMovieTrailer().get(position).getmTrailerKey()));
+                                        + mTrailer.getTrailerKey()));
                                 Log.i(LOG_TAG, "Trailer URL: " + trailerIntent);
                                 if (trailerIntent
                                         .resolveActivity(getActivity()
@@ -117,8 +114,7 @@ public class DetailFragment extends Fragment {
                     } else
                         detailView.findViewById(R.id.noTrailers_textView).setVisibility(View.VISIBLE);
                 }
-            }
-        }
+
         return detailView;
     }
 }

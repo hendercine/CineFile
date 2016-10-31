@@ -3,8 +3,6 @@ package com.example.android.cinefile.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
-
 /**
  * Created by Hendercine on 10/6/16.
  */
@@ -17,20 +15,22 @@ public class Movie implements Parcelable {
     public String mVoteAverage;
     public String mMoviePlot;
     public String mMovieBackDrop;
-    public ArrayList<Trailer> mMovieTrailer = new ArrayList<>();
+    public String mTrailerPath;
+//    public ArrayList<Trailer> mTrailerArrayList = new ArrayList<>();
 
-    public Movie(String movieTitle, String moviePoster, String releaseDate, String voteAverage, String moviePlot, String backDrop) {
+    public Movie(String movieTitle, String moviePoster, String releaseDate, String voteAverage, String moviePlot, String backDrop, String trailerPath) {
         this.mMovieTitle = movieTitle;
         this.mMoviePoster = moviePoster;
         this.mReleaseDate = releaseDate;
         this.mVoteAverage = voteAverage;
         this.mMoviePlot = moviePlot;
         this.mMovieBackDrop = backDrop;
+        this.mTrailerPath = trailerPath;
     }
 
-    public Movie(ArrayList<Trailer> trailer) {
-        this.mMovieTrailer = trailer;
-    }
+//    public Movie(ArrayList<Trailer> trailerArrayList) {
+//        this.mTrailerArrayList = trailerArrayList;
+//    }
 
     private Movie(Parcel in) {
         mMovieTitle = in.readString();
@@ -39,7 +39,8 @@ public class Movie implements Parcelable {
         mVoteAverage = in.readString();
         mMoviePlot = in.readString();
         mMovieBackDrop = in.readString();
-        in.readTypedList(mMovieTrailer, Trailer.CREATOR);
+        mTrailerPath = in.readString();
+//        in.readTypedList(mTrailerArrayList, Trailer.CREATOR);
     }
 
     @Override
@@ -53,7 +54,8 @@ public class Movie implements Parcelable {
         out.writeString(mVoteAverage);
         out.writeString(mMoviePlot);
         out.writeString(mMovieBackDrop);
-        out.writeTypedList(mMovieTrailer);
+        out.writeString(mTrailerPath);
+//        out.writeTypedList(mTrailerArrayList);
     }
 
     public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
@@ -62,7 +64,7 @@ public class Movie implements Parcelable {
         public Movie[] newArray(int size) { return new Movie[size]; }
     };
 
-    public ArrayList<Trailer> getMovieTrailer() {
-        return mMovieTrailer;
-    }
+//    public ArrayList<Trailer> getMovieTrailer() {
+//        return mTrailerArrayList;
+//    }
 }

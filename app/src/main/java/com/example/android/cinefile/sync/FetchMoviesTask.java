@@ -146,17 +146,25 @@ public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
 
         //Sort order passed in from Settings Activity
         String sortOrder;
+        String movieId = null;
+        try {
+            movieId = getMovieDataFromJson(moviesJsonStr).get(0).toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         sortOrder = params[0];
 
-            // Construct the URL for the TheMovieDB query
-            final String SORT_PARAM = sortOrder;
-            final String APPID_PARAM = "api_key";
-            final String LANG_PARAM = "language";
+        // Construct the URL for the TheMovieDB query
+        final String SORT_PARAM = sortOrder;
+        final String APPID_PARAM = "api_key";
+        final String LANG_PARAM = "language";
+        final String MOVIE_ID_PARAM = movieId;
+        final String VIDEOS_PARAM = "/videos";
 
-            Uri builtMoviesUri = Uri.parse(MOVIE_BASE_URL + SORT_PARAM).buildUpon()
-                    .appendQueryParameter(LANG_PARAM, "en-US")
-                    .appendQueryParameter(APPID_PARAM, API_KEY)
-                    .build();
+
+        Uri builtMoviesUri = Uri.parse(MOVIE_BASE_URL + MOVIE_ID_PARAM + VIDEOS_PARAM).buildUpon()
+                .appendQueryParameter(APPID_PARAM, API_KEY)
+                .build();
 
         URL moviesUrl = null;
         try {

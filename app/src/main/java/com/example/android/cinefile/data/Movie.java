@@ -3,12 +3,15 @@ package com.example.android.cinefile.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 /**
  * Created by Hendercine on 10/6/16.
  */
 
 public class Movie implements Parcelable {
 
+    public String mMovieId;
     public String mMovieTitle;
     public String mMoviePoster;
     public String mReleaseDate;
@@ -16,9 +19,10 @@ public class Movie implements Parcelable {
     public String mMoviePlot;
     public String mMovieBackDrop;
     public String mTrailerPath;
-//    public ArrayList<Trailer> mTrailerArrayList = new ArrayList<>();
+    public ArrayList<Trailer> mTrailerArrayList = new ArrayList<>();
 
-    public Movie(String movieTitle, String moviePoster, String releaseDate, String voteAverage, String moviePlot, String backDrop, String trailerPath) {
+    public Movie(String movieId, String movieTitle, String moviePoster, String releaseDate, String voteAverage, String moviePlot, String backDrop, String trailerPath) {
+        this.mMovieId = movieId;
         this.mMovieTitle = movieTitle;
         this.mMoviePoster = moviePoster;
         this.mReleaseDate = releaseDate;
@@ -28,11 +32,12 @@ public class Movie implements Parcelable {
         this.mTrailerPath = trailerPath;
     }
 
-//    public Movie(ArrayList<Trailer> trailerArrayList) {
-//        this.mTrailerArrayList = trailerArrayList;
-//    }
+    public Movie(ArrayList<Trailer> trailerArrayList) {
+        this.mTrailerArrayList = trailerArrayList;
+    }
 
     private Movie(Parcel in) {
+        mMovieId = in.readString();
         mMovieTitle = in.readString();
         mMoviePoster = in.readString();
         mReleaseDate = in.readString();
@@ -40,7 +45,7 @@ public class Movie implements Parcelable {
         mMoviePlot = in.readString();
         mMovieBackDrop = in.readString();
         mTrailerPath = in.readString();
-//        in.readTypedList(mTrailerArrayList, Trailer.CREATOR);
+        in.readTypedList(mTrailerArrayList, Trailer.CREATOR);
     }
 
     @Override
@@ -48,6 +53,7 @@ public class Movie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel out, int flags) {
+        out.writeString(mMovieId);
         out.writeString(mMovieTitle);
         out.writeString(mMoviePoster);
         out.writeString(mReleaseDate);
@@ -55,7 +61,7 @@ public class Movie implements Parcelable {
         out.writeString(mMoviePlot);
         out.writeString(mMovieBackDrop);
         out.writeString(mTrailerPath);
-//        out.writeTypedList(mTrailerArrayList);
+        out.writeTypedList(mTrailerArrayList);
     }
 
     public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
@@ -64,7 +70,19 @@ public class Movie implements Parcelable {
         public Movie[] newArray(int size) { return new Movie[size]; }
     };
 
-//    public ArrayList<Trailer> getMovieTrailer() {
-//        return mTrailerArrayList;
-//    }
+    public void setMovieId(String movieId) {
+        this.mMovieId = movieId;
+    }
+
+    public String getMovieId() {
+        return mMovieId;
+    }
+
+    public void setTrailerArrayList(ArrayList<Trailer> trailers) {
+        this.mTrailerArrayList = trailers;
+    }
+
+    public ArrayList<Trailer> getMovieTrailer() {
+        return mTrailerArrayList;
+    }
 }

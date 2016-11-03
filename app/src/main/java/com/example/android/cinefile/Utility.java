@@ -1,5 +1,7 @@
 package com.example.android.cinefile;
 
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -16,7 +18,7 @@ import java.net.URL;
 public class Utility {
     private final String LOG_TAG = Utility.class.getSimpleName();
 
-    public String requestConnection(URL url, String objectJsonStr) throws IOException {
+    public String requestConnection(String objectJsonStr) throws IOException {
 
         // These two need to be declared outside the try/catch
         // so that they can be closed in the finally block.
@@ -24,13 +26,14 @@ public class Utility {
         BufferedReader reader = null;
 
         try {
+            URL url = new URL(objectJsonStr);
             // Create the request to TheMovieDB, and open the connection
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
             // Read the input stream into a String
             InputStream inputStream = urlConnection.getInputStream();
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
             if (inputStream == null) {
                 // Nothing to do.
                 return null;
@@ -65,5 +68,10 @@ public class Utility {
             }
         }
         return objectJsonStr;
+    }
+
+    public void setupRecyclerView(RecyclerView recyclerView, RecyclerView.Adapter adapter) {
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+        recyclerView.setAdapter(adapter);
     }
 }

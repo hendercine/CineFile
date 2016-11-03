@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.android.cinefile.data.Movie;
 import com.example.android.cinefile.data.Trailer;
 import com.example.android.cinefile.sync.TrailerAdapter;
 import com.squareup.picasso.Picasso;
@@ -23,9 +24,11 @@ import com.squareup.picasso.Picasso;
  */
 public class DetailFragment extends Fragment {
 
+    Movie mMovie;
     private Trailer mTrailer = null;
     private static final String LOG_TAG = DetailFragment.class.getSimpleName();
     RecyclerView trailerRecyclerView;
+    TrailerAdapter trailerAdapter;
 
     public DetailFragment() {
         setHasOptionsMenu(true);
@@ -84,14 +87,16 @@ public class DetailFragment extends Fragment {
                     .setText(movie_overview);
             //pass trailer
             final String movie_trailer = intent.getStringExtra("MOVIE_TRAILER");
+            if (mMovie != null) {
+                if (mMovie.getMovieTrailer().size() != 0) {
                     trailerRecyclerView =
                             (RecyclerView) detailView.findViewById(R.id.trailers_recycler);
-                    TrailerAdapter trailerAdapter = new TrailerAdapter(
-                            null,
-                            getContext());
+                    RecyclerView.LayoutManager llm = new LinearLayoutManager(
+                            getActivity(), LinearLayoutManager.HORIZONTAL, false);
                     if (trailerRecyclerView != null) {
                         trailerRecyclerView.setHasFixedSize(false);
-                        trailerRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                        trailerRecyclerView.setLayoutManager(llm);
+                        trailerAdapter = new TrailerAdapter(mMovie.getMovieTrailer(), getActivity());
                         trailerRecyclerView.setAdapter(trailerAdapter);
                         trailerAdapter.setOnItemClickListener(new TrailerAdapter.OnItemClickListener() {
                             @Override
@@ -114,6 +119,8 @@ public class DetailFragment extends Fragment {
                     } else
                         detailView.findViewById(R.id.noTrailers_textView).setVisibility(View.VISIBLE);
                 }
+            }
+        }
 
         return detailView;
     }

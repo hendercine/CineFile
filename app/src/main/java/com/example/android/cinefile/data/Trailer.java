@@ -3,11 +3,14 @@ package com.example.android.cinefile.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.stream.Stream;
+
 /**
  * Created by Hendercine on 10/23/16.
  */
 
-public class Trailer implements Parcelable {
+public class Trailer extends ArrayList<Trailer> implements Parcelable {
 
     private String mTrailerName, mTrailerKey;
 

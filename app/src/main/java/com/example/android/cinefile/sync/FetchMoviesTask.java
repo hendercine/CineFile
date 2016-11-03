@@ -35,6 +35,7 @@ public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
             "http://api.themoviedb.org/3/movie/";
     private final String TRAILER_BASE_URL =
             "//api.themoviedb.org/3/movie/";
+    final String APPID_PARAM = "api_key";
 
     public FetchMoviesTask(MoviesFragment moviesFragment) {
         this.moviesFragment = moviesFragment;
@@ -45,7 +46,7 @@ public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
     }
 
     private ArrayList<Movie> getMovieDataFromJson(String movieJsonStr)
-            throws JSONException {
+            throws JSONException, IOException {
 
         // These are the names of the JSON objects that need to be extracted.
         final String TMDB_RESULTS = moviesFragment.getString(R.string.json_results);
@@ -88,7 +89,7 @@ public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
             trailerPath = getTrailerDataFromJson(movieId).toString();
 
             Movie movie =
-                    new Movie(title, posterPath, releaseDate, voteAverage, moviePlot, backDrop, trailerPath);
+                    new Movie(movieId, title, posterPath, releaseDate, voteAverage, moviePlot, backDrop, trailerPath);
             movieResults.add(movie);
         }
 
@@ -97,7 +98,7 @@ public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
     }
 
     private ArrayList<Trailer> getTrailerDataFromJson(String movieId)
-            throws JSONException {
+            throws JSONException, IOException {
 
         // These are the names of the JSON objects that need to be extracted.
         final String TMDB_TRAILER = moviesFragment.getString(R.string.trailer_path);
@@ -105,10 +106,11 @@ public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
         final String TMDB_TRAILER_NAME = moviesFragment.getString(R.string.trailer_name);
 
 
-        String trailerBaseUrl = MOVIE_BASE_URL + movieId + TMDB_TRAILER + API_KEY;
+        String trailerBaseUrl = MOVIE_BASE_URL + movieId + TMDB_TRAILER + APPID_PARAM + "=" + API_KEY;
+        String trailerJson = new Utility().requestConnection(trailerBaseUrl);
 
-        JSONObject trailersJson = new JSONObject(trailerBaseUrl);
-        JSONArray trailersArray = trailersJson.getJSONArray("results");
+        JSONObject trailersObj = new JSONObject(trailerJson);
+        JSONArray trailersArray = trailersObj.getJSONArray("results");
 
         ArrayList<Trailer> trailerResults = new ArrayList<>();
 
@@ -135,121 +137,40 @@ public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
         if (params.length == 0) {
             return null;
         }
-//        // These two need to be declared outside the try/catch
-//        // so that they can be closed in the finally block.
-//        HttpURLConnection urlConnection = null;
-//        BufferedReader reader = null;
 
         // Will contain the raw JSON response as a string.
-        String moviesJsonStr = "";
-        String trailersJsonStr = "";
+        String moviesJsonStr;
 
         //Sort order passed in from Settings Activity
         String sortOrder;
-        String movieId = null;
-        try {
-            movieId = getMovieDataFromJson(moviesJsonStr).get(0).toString();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         sortOrder = params[0];
 
         // Construct the URL for the TheMovieDB query
         final String SORT_PARAM = sortOrder;
-        final String APPID_PARAM = "api_key";
         final String LANG_PARAM = "language";
-        final String MOVIE_ID_PARAM = movieId;
-        final String VIDEOS_PARAM = "/videos";
 
-
-        Uri builtMoviesUri = Uri.parse(MOVIE_BASE_URL + MOVIE_ID_PARAM + VIDEOS_PARAM).buildUpon()
-                .appendQueryParameter(APPID_PARAM, API_KEY)
-                .build();
-
-        URL moviesUrl = null;
-        try {
-            moviesUrl = new URL(builtMoviesUri.toString());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        //TODO: Remove verbose log.
-            Log.v(LOG_TAG, "Built Movies URL: " + moviesUrl);
-
-        Uri builtTrailersUri = Uri.parse(MOVIE_BASE_URL + SORT_PARAM).buildUpon()
+        Uri builtMovieUri = Uri.parse(MOVIE_BASE_URL + SORT_PARAM).buildUpon()
                 .appendQueryParameter(LANG_PARAM, "en-US")
                 .appendQueryParameter(APPID_PARAM, API_KEY)
                 .build();
 
-        URL trailersUrl = null;
+        URL movieUrl = null;
         try {
-            trailersUrl = new URL(builtTrailersUri.toString());
+            movieUrl = new URL(builtMovieUri.toString());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+        assert movieUrl != null;
+        moviesJsonStr = movieUrl.toString();
         //TODO: Remove verbose log.
-        Log.v(LOG_TAG, "Built Trailers URL: " + trailersUrl);
+        Log.v(LOG_TAG, "Built Movies URL: " + movieUrl);
 
         try {
-            String movieBufferStr = new Utility().requestConnection(trailersUrl, moviesJsonStr);
+            String movieBufferStr = new Utility().requestConnection(moviesJsonStr);
             return getMovieDataFromJson(movieBufferStr);
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
-        try {
-            String trailerBufferStr = new Utility().requestConnection(trailersUrl, trailersJsonStr);
-            getMovieDataFromJson(trailerBufferStr);
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-        }
-
-//            // Create the request to TheMovieDB, and open the connection
-//            urlConnection = (HttpURLConnection) url.openConnection();
-//            urlConnection.setRequestMethod("GET");
-//            urlConnection.connect();
-//            // Read the input stream into a String
-//            InputStream inputStream = urlConnection.getInputStream();
-//            StringBuffer buffer = new StringBuffer();
-//            if (inputStream == null) {
-//                // Nothing to do.
-//                return null;
-//            }
-//            reader = new BufferedReader(new InputStreamReader(inputStream));
-//
-//            String line;
-//            while ((line = reader.readLine()) != null) {
-//                buffer.append(line + "\n");
-//            }
-//
-//            if (buffer.length() == 0) {
-//                // Stream was empty.  No point in parsing.
-//                return null;
-//            }
-//            moviesJsonStr = buffer.toString();
-//
-//        } catch (IOException e) {
-//            Log.e(LOG_TAG, "Error ", e);
-//            // If the code didn't successfully get the movie data, there's no point in
-//            // attempting to parse it.
-//            return null;
-//        } finally {
-//            if (urlConnection != null) {
-//                urlConnection.disconnect();
-//            }
-//            if (reader != null) {
-//                try {
-//                    reader.close();
-//                } catch (final IOException e) {
-//                    Log.e(LOG_TAG, "Error closing stream", e);
-//                }
-//            }
-//        }
-//
-//        try {
-//            return getMovieDataFromJson(moviesJsonStr);
-//        } catch (JSONException e) {
-//            Log.e(LOG_TAG, e.getMessage(), e);
-//            e.printStackTrace();
-//        }
         return null;
     }
 

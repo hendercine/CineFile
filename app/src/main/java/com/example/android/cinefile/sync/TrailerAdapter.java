@@ -24,6 +24,25 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.ViewHold
     private ArrayList<Trailer> mTrailers;
     private Context mContext;
 
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        TextView mTextViewTitle;
+        ImageView mImageViewThumbnail;
+
+        ViewHolder(View v) {
+            super(v);
+            mImageViewThumbnail = (ImageView) v.findViewById(R.id.video_thumbnail);
+            mTextViewTitle = (TextView) v.findViewById(R.id.video_title);
+            v.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (mItemClickListener != null) {
+                mItemClickListener.onItemClick(v, getAdapterPosition());
+            }
+        }
+    }
+
     public TrailerAdapter(ArrayList<Trailer> trailers, Context context) {
         mTrailers = trailers;
         mContext = context;
@@ -48,12 +67,12 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.ViewHold
     public int getItemCount() {
         return mTrailers.size();
     }
-
-    public void swap(ArrayList<Trailer> newTrailerList) {
-        mTrailers.clear();
-        mTrailers.addAll(newTrailerList);
-        notifyDataSetChanged();
-    }
+// TODO: Use or delete this method.
+//    public void swap(ArrayList<Trailer> newTrailerList) {
+//        mTrailers.clear();
+//        mTrailers.addAll(newTrailerList);
+//        notifyDataSetChanged();
+//    }
 
     public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {
         TrailerAdapter.mItemClickListener = mItemClickListener;
@@ -61,25 +80,6 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.ViewHold
 
     public interface OnItemClickListener {
         void onItemClick(View view, int position);
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView mTextViewTitle;
-        public ImageView mImageViewThumbnail;
-
-        public ViewHolder(View v) {
-            super(v);
-            mImageViewThumbnail = (ImageView) v.findViewById(R.id.video_thumbnail);
-            mTextViewTitle = (TextView) v.findViewById(R.id.video_title);
-            v.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            if (mItemClickListener != null) {
-                mItemClickListener.onItemClick(v, getAdapterPosition());
-            }
-        }
     }
 
 }

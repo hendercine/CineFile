@@ -58,5 +58,12 @@
     <string name="no_trailers_yet">No trailers yet!</string>
     <string name="trailer_key">key</string>
     <string name="trailer_name">name</string>
+    <string name="most_popular">Most Popular</string>
+    <string name="top_rated">Top Rated</string>
+    <string name="favorites">Favorites</string>
+    <string name="sort_order">Sort Order</string>
+    <string name="offline_message">"Oops! You have no internet connection :("</string>
+    <string name="nothing_here_yet">Nothing Here yet.</string>
+    <string name="share">Share</string>
 
 </resources>

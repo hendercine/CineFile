@@ -43,9 +43,9 @@ public class MainViewAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView gridPosterView;
 
-        if (convertView == null) {
+        if (convertView == null)
             gridPosterView = new ImageView(mContext);
-        } else {
+        else
             gridPosterView = (ImageView) convertView;
 
             gridPosterView.setAdjustViewBounds(true);
@@ -56,7 +56,6 @@ public class MainViewAdapter extends BaseAdapter {
                     load(posterUrl + paths.get(position)).
                     placeholder(R.drawable.placeholder_portrait).
                     into(gridPosterView);
-        }
 
         return gridPosterView;
     }

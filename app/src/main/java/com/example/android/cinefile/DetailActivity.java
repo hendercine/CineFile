@@ -1,5 +1,6 @@
 package com.example.android.cinefile;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -10,7 +11,7 @@ import org.parceler.Parcels;
 
 public class DetailActivity extends AppCompatActivity {
 
-    private DetailFragment mDetailFragment;
+    private Fragment mDetailFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,13 +21,14 @@ public class DetailActivity extends AppCompatActivity {
 
         mDetailFragment = new DetailFragment();
         if (savedInstanceState != null) {
-            mDetailFragment.getFragmentManager().getFragment(savedInstanceState, "fragment");
+            mDetailFragment = getFragmentManager().getFragment(savedInstanceState, "fragment");
         } else {
             Bundle bundle = new Bundle();
             bundle.putParcelable("movie", Parcels.wrap(movie));
             mDetailFragment.setArguments(bundle);
         }
-        mDetailFragment.getFragmentManager().beginTransaction().replace(R.id.detail_frame, mDetailFragment).commit();
+        getFragmentManager().beginTransaction().
+                add(R.id.parent_scrollView, mDetailFragment).commit();
 
     }
 

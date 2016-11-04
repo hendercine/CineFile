@@ -25,7 +25,6 @@ import java.util.ArrayList;
  */
 
 public class Utility {
-    private final String LOG_TAG = Utility.class.getSimpleName();
     private static String API_KEY = BuildConfig.THE_MOVIES_DB_API_KEY;
 
     public ArrayList<String> getPosterPaths(boolean sortByPop) throws JSONException {
@@ -90,8 +89,8 @@ public class Utility {
     public boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager =
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 
     public String sortMovieData(boolean sortByPop) {
@@ -105,6 +104,8 @@ public class Utility {
     }
 
     public String getJsonData(String urlString) {
+        // These two need to be declared outside the try/catch
+        // so that they can be closed in the finally block.
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
         StringBuilder buffer = new StringBuilder();

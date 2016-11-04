@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -38,7 +37,7 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 /**
- * Created by hendercine on 10/30/16.
+ * CineFile_Stage_2 created by Hendercine on 10/30/16.
  */
 public class DetailFragment extends Fragment {
 
@@ -51,7 +50,7 @@ public class DetailFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         mMovie = Parcels.unwrap(getArguments().getParcelable("movie"));
@@ -111,7 +110,7 @@ public class DetailFragment extends Fragment {
                                 + mMovie.getTrailers().get(position).getKey()));
                         if (yIntent.resolveActivity(getActivity().getPackageManager()) != null)
                             startActivity(yIntent);
-                        else Snackbar.make(getView().findViewById(R.id.parent_scrollView),
+                        else Snackbar.make(view.findViewById(R.id.parent_scrollView),
                                 R.string.no_browser_msg,
                                 Snackbar.LENGTH_LONG).
                                 show();
@@ -146,7 +145,7 @@ public class DetailFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        ScrollView parent = (ScrollView) getView().findViewById(R.id.parent_scrollView);
+        ScrollView parent = (ScrollView) getActivity().findViewById(R.id.parent_scrollView);
         outState.putIntArray("DETAILS_PARENT_SCROLL_STATE",
                 new int[]{parent.getScrollX(), parent.getScrollY()});
     }
@@ -156,8 +155,8 @@ public class DetailFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState != null) {
             final int[] parentPosition = savedInstanceState.getIntArray("DETAILS_PARENT_SCROLL_STATE");
-            final int[] childPosition = savedInstanceState.getIntArray("DETAILS_CHILD_SCROLL_STATE");
-            ScrollView parent = (ScrollView) getView().findViewById(R.id.parent_scrollView);
+//            final int[] childPosition = savedInstanceState.getIntArray("DETAILS_CHILD_SCROLL_STATE");
+            ScrollView parent = (ScrollView) getActivity().findViewById(R.id.parent_scrollView);
 
             assert parentPosition != null;
             parent.scrollTo(parentPosition[0], parentPosition[1]);

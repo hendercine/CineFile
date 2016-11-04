@@ -1,6 +1,5 @@
 package com.example.android.cinefile;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +24,7 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    private final String LOG_TAG = MainActivity.class.getSimpleName();
 
     private boolean mIsTablet, mSnackbarShown;
     private Utility mUtility;
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_popup, menu);
-        String sortOrder = mSharedPref.getString("sort_criteria", "popular");
+        String sortOrder = mSharedPref.getString("sort_order", "popular");
         switch (sortOrder) {
             case "popular":
                 menu.findItem(R.id.menu_popular).setChecked(true);
@@ -125,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void refreshContent() {
-        mSortOrder = mSharedPref.getString("sort_criteria", "menu_popular");
+        mSortOrder = mSharedPref.getString("sort_order", "menu_popular");
         if (mUtility.isNetworkAvailable(this) || mSortOrder.equals("menu_favorites"))
             new ImageLoadTask().execute(mSortOrder);
             // This also loads first movie's details on tablet devices
@@ -133,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showOfflineSnackbar() {
-        Snackbar.make(findViewById(R.id.grid_view_posters),
+        Snackbar.make(findViewById(R.id.container),
                 R.string.offline_message,
                 Snackbar.LENGTH_INDEFINITE).setAction("RETRY", new View.OnClickListener() {
             @Override
@@ -147,6 +148,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void loadDetails(final int position) {
         if (mUtility.isNetworkAvailable(this) || mSortOrder.equals("menu_favorites")) {
+            Log.v(LOG_TAG, "Network is available: " +
+                    mUtility.isNetworkAvailable(MainActivity.this));
             if (mIsTablet && (getFragmentManager().findFragmentById(R.id.detail_frame) != null)) {
                 getFragmentManager().
                         beginTransaction().
@@ -198,7 +201,8 @@ public class MainActivity extends AppCompatActivity {
             else {
                 findViewById(R.id.noItems_textView).setVisibility(View.GONE);
                 //Load first movie's details on tablet if no selection had been made yet
-                if (mIsTablet && (getFragmentManager().findFragmentById(R.id.detail_frame)== null)) {
+                if (mIsTablet && (getSupportFragmentManager().
+                        findFragmentById(R.id.detail_frame)== null)) {
                     new FetchDetailsTask(mSortOrder, 0).execute();
                 }
             }
@@ -207,11 +211,11 @@ public class MainActivity extends AppCompatActivity {
 
     public class FetchDetailsTask extends AsyncTask<Void, Void, Movie> {
 
-        private String sortCriteria;
+        private String mSortOrder;
         private int position;
 
-        public FetchDetailsTask(String sortCriteria, int position) {
-            this.sortCriteria = sortCriteria;
+        public FetchDetailsTask(String sortOrder, int position) {
+            this.mSortOrder = sortOrder;
             this.position = position;
         }
 
@@ -219,14 +223,14 @@ public class MainActivity extends AppCompatActivity {
         protected Movie doInBackground(Void... params) {
             Movie movie = new Movie();
 
-            if (!sortCriteria.equals("menu_favorites")) {
-                if (mUtility.isNetworkAvailable(MainActivity.this))
+            if (!mSortOrder.equals("menu_favorites")) {
+                if (mUtility.isNetworkAvailable(MainActivity.this)) {
                     try {
-                        movie = mUtility.getMovieData(sortCriteria.equals("menu_popular"), position);
+                        movie = mUtility.getMovieData(mSortOrder.equals("menu_popular"), position);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                else movie = null;
+                } else movie = null;
             } else if (mMovieIds.size() != 0)
                 movie = mMovieDbHandler.fetchMovieDetails(mMovieIds.get(position));
             else movie = null;
@@ -239,9 +243,11 @@ public class MainActivity extends AppCompatActivity {
                 if (mIsTablet) {
                     Bundle bundle = new Bundle();
                     bundle.putParcelable("movie", Parcels.wrap(result));
-                    Fragment fragment = new Fragment();
-                    fragment.setArguments(bundle);
-                    getFragmentManager().beginTransaction().replace(R.id.detail_frame, fragment).
+                    DetailFragment detailFragment = new DetailFragment();
+                    detailFragment.setArguments(bundle);
+                    getSupportFragmentManager().
+                            beginTransaction().
+                            replace(R.id.detail_frame, detailFragment).
                             commit();
                 } else {
                     Intent intent = new Intent(MainActivity.this, DetailActivity.class);

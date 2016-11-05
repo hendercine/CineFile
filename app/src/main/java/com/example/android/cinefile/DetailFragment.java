@@ -25,6 +25,7 @@ import com.example.android.cinefile.adapters.ReviewAdapter;
 import com.example.android.cinefile.adapters.TrailerAdapter;
 import com.example.android.cinefile.data.MovieDbHandler;
 import com.example.android.cinefile.objects.Movie;
+import com.example.android.cinefile.objects.Review;
 import com.example.android.cinefile.objects.Trailer;
 import com.squareup.picasso.Picasso;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
@@ -41,7 +42,8 @@ import java.util.Locale;
  */
 public class DetailFragment extends Fragment {
 
-    private Movie mMovie;
+    private Movie mMovie = new Movie();
+    private Review mReview = new Review();
     private ShareActionProvider mShareActionProvider;
     private CheckBox mFavCheckBox;
 
@@ -59,26 +61,43 @@ public class DetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_detail, container, false);
+        View detailView = inflater.inflate(R.layout.fragment_detail, container, false);
 
-        ((TextView) v.findViewById(R.id.title)).setText(mMovie.getMovieTitle());
+        //Pass Title text
+        TextView title = (TextView) detailView.findViewById(R.id.movie_title_text);
+        title.setText(mMovie.getMovieTitle());
+
+        //Pass Poster thumbnail
         Picasso.with(getContext()).
                 load("http://image.tmdb.org/t/p/w185/" + mMovie.getPosterPath()).
                 placeholder(R.drawable.placeholder_portrait).
-                into((ImageView) v.findViewById(R.id.detail_poster_image_view));
+                into((ImageView) detailView.findViewById(R.id.detail_poster_image_view));
+
+        //Pass Backdrop Image
+        Picasso.with(getContext()).
+                load("http://image.tmdb.org/t/p/w185/" + mMovie.getBackdropPath()).
+                placeholder(R.drawable.placeholder).
+                into((ImageView) detailView.findViewById(R.id.backdrop_image_view));
+
+        //Pass Release Date
         SimpleDateFormat input = new SimpleDateFormat("yyyy-mm-dd", Locale.getDefault());
         try {
-            ((TextView) v.findViewById(R.id.movie_release_date_text)).
+            ((TextView) detailView.findViewById(R.id.movie_release_date_text)).
                     setText(DateFormat.getDateInstance(DateFormat.SHORT).
                             format(input.parse(mMovie.getReleaseDate())));
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        ((TextView) v.findViewById(R.id.movie_vote_avg_text)).
-                setText(String.valueOf(mMovie.getVoteAverage()));
-        ((TextView) v.findViewById(R.id.movie_summary_text)).setText(mMovie.getPlot());
 
-        mFavCheckBox = (CheckBox) v.findViewById(R.id.fav_btn);
+        //Pass Vote Average
+        ((TextView) detailView.findViewById(R.id.movie_vote_avg_text)).
+                setText(String.valueOf(mMovie.getVoteAverage()));
+
+        //Pass Plot Summary
+        ((TextView) detailView.findViewById(R.id.movie_summary_text)).setText(mMovie.getPlot());
+
+        //Setup Favorites Checkbox
+        mFavCheckBox = (CheckBox) detailView.findViewById(R.id.fav_btn);
         new DbTask().execute("=");
         //Use onClick() to avoid CheckedStateChange(caused by above statement) to invoke onCheckedStateChange()
         mFavCheckBox.setOnClickListener(new View.OnClickListener() {
@@ -92,8 +111,9 @@ public class DetailFragment extends Fragment {
             }
         });
 
+        //Pass Trailers
         if (mMovie.getTrailers().size() != 0) {
-            RecyclerView trailerRecyclerView = (RecyclerView) v.findViewById(R.id.trailers_recycler);
+            RecyclerView trailerRecyclerView = (RecyclerView) detailView.findViewById(R.id.trailers_recycler);
             RecyclerView.LayoutManager llm = new LinearLayoutManager(getActivity(),
                     LinearLayoutManager.HORIZONTAL, false);
             if (trailerRecyclerView != null) {
@@ -117,10 +137,14 @@ public class DetailFragment extends Fragment {
                     }
                 });
             }
-        } else v.findViewById(R.id.noTrailers_textView).setVisibility(View.VISIBLE);
+        } else detailView.findViewById(R.id.noTrailers_textView).setVisibility(View.VISIBLE);
 
+        //Pass Reviews
         if (mMovie.getReviews().size() != 0) {
-            RecyclerView reviewRecyclerView = (RecyclerView) v.findViewById(R.id.reviews_recycler);
+            TextView authorView = (TextView) detailView.findViewById(R.id.reviews_author);
+            authorView.setText(mReview.getAuthor());
+
+            RecyclerView reviewRecyclerView = (RecyclerView) detailView.findViewById(R.id.reviews_recycler);
             if (reviewRecyclerView != null) {
                 reviewRecyclerView.setHasFixedSize(false);
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity()) {
@@ -138,8 +162,9 @@ public class DetailFragment extends Fragment {
                 ReviewAdapter reviewAdapter = new ReviewAdapter(mMovie.getReviews());
                 reviewRecyclerView.setAdapter(reviewAdapter);
             }
-        } else v.findViewById(R.id.noReviews_textView).setVisibility(View.VISIBLE);
-        return v;
+        } else detailView.findViewById(R.id.noReviews_textView).setVisibility(View.VISIBLE);
+
+        return detailView;
     }
 
     @Override

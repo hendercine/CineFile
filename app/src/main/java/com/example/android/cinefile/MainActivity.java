@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private MovieDbHandler mMovieDbHandler;
     private GridView mGridView;
     private SharedPreferences mSharedPref;
-    private String mSortOrder;
+    private String mSortCriteria;
     private ArrayList<String> mPosterPaths, mMovieIds;
 
     @Override
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         if (savedInstanceState != null) {
-            mSortOrder = savedInstanceState.getString("SORT_ORDER");
+            mSortCriteria = savedInstanceState.getString("SORT_CRITERIA");
             mPosterPaths = savedInstanceState.getStringArrayList("POSTER_PATHS");
             if (savedInstanceState.getBoolean("SNACKBAR_VISIBLE"))
                 showOfflineSnackbar();
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("SORT_ORDER", mSortOrder);
+        outState.putString("SORT_CRITERIA", mSortCriteria);
         outState.putStringArrayList("POSTER_PATHS", mPosterPaths);
         outState.putInt("GRID_SCROLL_STATE", mGridView.getFirstVisiblePosition());
         outState.putBoolean("SNACKBAR_VISIBLE", mSnackbarShown);
@@ -86,8 +86,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_popup, menu);
-        String sortOrder = mSharedPref.getString("sort_order", "popular");
-        switch (sortOrder) {
+        String sortCriteria = mSharedPref.getString("sort_order", "popular");
+        switch (sortCriteria) {
             case "popular":
                 menu.findItem(R.id.menu_popular).setChecked(true);
                 break;
@@ -126,9 +126,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void refreshContent() {
-        mSortOrder = mSharedPref.getString("sort_order", "menu_popular");
-        if (mUtility.isNetworkAvailable(this) || mSortOrder.equals("menu_favorites"))
-            new ImageLoadTask().execute(mSortOrder);
+        mSortCriteria = mSharedPref.getString("sort_order", "menu_popular");
+        if (mUtility.isNetworkAvailable(this) || mSortCriteria.equals("menu_favorites"))
+            new ImageLoadTask().execute(mSortCriteria);
             // This also loads first movie's details on tablet devices
         else showOfflineSnackbar();
     }
@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loadDetails(final int position) {
-        if (mUtility.isNetworkAvailable(this) || mSortOrder.equals("menu_favorites")) {
+        if (mUtility.isNetworkAvailable(this) || mSortCriteria.equals("menu_favorites")) {
             Log.v(LOG_TAG, "Network is available: " +
                     mUtility.isNetworkAvailable(MainActivity.this));
             if (mIsTablet && (getFragmentManager().findFragmentById(R.id.detail_frame) != null)) {
@@ -155,12 +155,13 @@ public class MainActivity extends AppCompatActivity {
                         beginTransaction().
                         remove(getFragmentManager().findFragmentById(R.id.detail_frame)).
                         commit();
-                new FetchDetailsTask(mSortOrder, position).execute();
-            } else Snackbar.make(findViewById(R.id.container),
-                    R.string.offline_message,
-                    Snackbar.LENGTH_LONG).
-                    show();
-        }
+            }
+        } else { Snackbar.make(findViewById(R.id.container),
+                R.string.offline_message,
+                Snackbar.LENGTH_LONG).
+                show();}
+
+        new FetchDetailsTask(mSortCriteria, position).execute();
     }
 
     public class ImageLoadTask extends AsyncTask<String, Void, Void> {
@@ -203,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
                 //Load first movie's details on tablet if no selection had been made yet
                 if (mIsTablet && (getSupportFragmentManager().
                         findFragmentById(R.id.detail_frame)== null)) {
-                    new FetchDetailsTask(mSortOrder, 0).execute();
+                    new FetchDetailsTask(mSortCriteria, 0).execute();
                 }
             }
         }

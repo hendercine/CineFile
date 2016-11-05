@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.example.android.cinefile.adapters.MainViewAdapter;
 import com.example.android.cinefile.data.MovieDbHandler;
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
             if (mPosterPaths != null) {
                 MainViewAdapter adapter = new MainViewAdapter(this, mPosterPaths);
                 mGridView.setAdapter(adapter);
+                mGridView.setSelection(savedInstanceState.getInt("GRID_SCROLL_STATE"));
                 if (mIsTablet) {
                     getFragmentManager().beginTransaction().
                             replace(R.id.detail_frame,
@@ -85,10 +87,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         getMenuInflater().inflate(R.menu.menu_popup, menu);
-        String sortCriteria = mSharedPref.getString("sort_order", "popular");
+        String sortCriteria = mSharedPref.getString("sort_criteria", "pop");
         switch (sortCriteria) {
-            case "popular":
+            case "pop":
                 menu.findItem(R.id.menu_popular).setChecked(true);
                 break;
             case "rat":
@@ -107,27 +110,28 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.menu_popular || id == R.id.menu_top_rated || id == R.id.menu_favorites) {
             SharedPreferences.Editor editor = mSharedPref.edit();
 
-            String order;
+            String criteria;
             if (id == R.id.menu_popular)
-                order = "menu_popular";
+                criteria = "pop";
             else if (id == R.id.menu_top_rated)
-                order = "menu_top_rated";
-            else order = "menu_favorites";
+                criteria = "rat";
+            else criteria = "fav";
 
-            String temp = mSharedPref.getString("sort_order", "menu_popular");
-            if (!order.equals(temp)) {
-                editor.putString("sort_order", order);
+            String temp = mSharedPref.getString("sort_criteria", "pop");
+            if (!criteria.equals(temp)) {
+                editor.putString("sort_criteria", criteria);
                 editor.apply();
                 invalidateOptionsMenu();
                 refreshContent();
             }
-        }
+        } else if (id == R.id.action_settings)
+            Toast.makeText(MainActivity.this, "Coming soon.", Toast.LENGTH_SHORT).show();
         return super.onOptionsItemSelected(item);
     }
 
     public void refreshContent() {
-        mSortCriteria = mSharedPref.getString("sort_order", "menu_popular");
-        if (mUtility.isNetworkAvailable(this) || mSortCriteria.equals("menu_favorites"))
+        mSortCriteria = mSharedPref.getString("sort_criteria", "pop");
+        if (mUtility.isNetworkAvailable(this) || mSortCriteria.equals("fav"))
             new ImageLoadTask().execute(mSortCriteria);
             // This also loads first movie's details on tablet devices
         else showOfflineSnackbar();
@@ -147,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loadDetails(final int position) {
-        if (mUtility.isNetworkAvailable(this) || mSortCriteria.equals("menu_favorites")) {
+        if (mUtility.isNetworkAvailable(this) || mSortCriteria.equals("fav")) {
             Log.v(LOG_TAG, "Network is available: " +
                     mUtility.isNetworkAvailable(MainActivity.this));
             if (mIsTablet && (getFragmentManager().findFragmentById(R.id.detail_frame) != null)) {
@@ -212,11 +216,11 @@ public class MainActivity extends AppCompatActivity {
 
     public class FetchDetailsTask extends AsyncTask<Void, Void, Movie> {
 
-        private String mSortOrder;
+        private String mSortCriteria;
         private int position;
 
-        public FetchDetailsTask(String sortOrder, int position) {
-            this.mSortOrder = sortOrder;
+        public FetchDetailsTask(String sortCriteria, int position) {
+            this.mSortCriteria = sortCriteria;
             this.position = position;
         }
 
@@ -224,14 +228,14 @@ public class MainActivity extends AppCompatActivity {
         protected Movie doInBackground(Void... params) {
             Movie movie = new Movie();
 
-            if (!mSortOrder.equals("menu_favorites")) {
-                if (mUtility.isNetworkAvailable(MainActivity.this)) {
+            if (!mSortCriteria.equals("fav")) {
+                if (mUtility.isNetworkAvailable(MainActivity.this))
                     try {
-                        movie = mUtility.getMovieData(mSortOrder.equals("menu_popular"), position);
+                        movie = mUtility.getMovieData(mSortCriteria.equals("pop"), position);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                } else movie = null;
+                 else movie = null;
             } else if (mMovieIds.size() != 0)
                 movie = mMovieDbHandler.fetchMovieDetails(mMovieIds.get(position));
             else movie = null;

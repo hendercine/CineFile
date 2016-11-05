@@ -55,7 +55,9 @@ public class DetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        mMovie = Parcels.unwrap(getArguments().getParcelable("movie"));
+        String moviesStr = "movie";
+        if (mMovie != null)
+        mMovie = Parcels.unwrap(getArguments().getParcelable(moviesStr));
     }
 
     @Override
@@ -170,7 +172,8 @@ public class DetailFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        ScrollView parent = (ScrollView) getActivity().findViewById(R.id.parent_scrollView);
+        ScrollView parent = (ScrollView) getView().findViewById(R.id.parent_scrollView);
+        if (parent != null)
         outState.putIntArray("DETAILS_PARENT_SCROLL_STATE",
                 new int[]{parent.getScrollX(), parent.getScrollY()});
     }
@@ -181,10 +184,11 @@ public class DetailFragment extends Fragment {
         if (savedInstanceState != null) {
             final int[] parentPosition = savedInstanceState.getIntArray("DETAILS_PARENT_SCROLL_STATE");
 //            final int[] childPosition = savedInstanceState.getIntArray("DETAILS_CHILD_SCROLL_STATE");
-            ScrollView parent = (ScrollView) getActivity().findViewById(R.id.parent_scrollView);
-
-            assert parentPosition != null;
-            parent.scrollTo(parentPosition[0], parentPosition[1]);
+            if (parentPosition != null) {
+            ScrollView parent = (ScrollView) getView().findViewById(R.id.parent_scrollView);
+            if (parent != null) {
+            parent.scrollTo(parentPosition[0], parentPosition[1]);}
+            }
         }
     }
 

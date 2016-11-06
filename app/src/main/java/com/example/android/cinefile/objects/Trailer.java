@@ -5,7 +5,7 @@ import org.parceler.Parcel;
 @Parcel
 public class Trailer {
 
-    public String name, key;
+    String name, key;
 
     public String getKey() {
         return key;

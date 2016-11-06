@@ -26,7 +26,8 @@
                 android:id="@+id/video_thumbnail"
                 android:layout_width="160dp"
                 android:layout_height="90dp"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/trailer_video_thumbnail"/>
 
             <ImageView
                 android:id="@+id/play_imageButton"
@@ -35,7 +36,8 @@
                 android:layout_gravity="center"
                 android:adjustViewBounds="true"
                 android:src="@drawable/ic_play_circle_outline"
-                android:tint="@android:color/darker_gray"/>
+                android:tint="@android:color/darker_gray"
+                android:contentDescription="@string/trailer_play_button_description"/>
 
         </FrameLayout>
 

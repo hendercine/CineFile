@@ -152,8 +152,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void loadDetails(final int position) {
         if (mUtility.isNetworkAvailable(this) || mSortCriteria.equals("fav")) {
-            Log.v(LOG_TAG, "Network is available: " +
-                    mUtility.isNetworkAvailable(MainActivity.this));
             if (mIsTablet && (getFragmentManager().findFragmentById(R.id.detail_frame) != null)) {
                 getFragmentManager().
                         beginTransaction().
@@ -219,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
         private String mSortCriteria;
         private int position;
 
-        public FetchDetailsTask(String sortCriteria, int position) {
+        FetchDetailsTask(String sortCriteria, int position) {
             this.mSortCriteria = sortCriteria;
             this.position = position;
         }

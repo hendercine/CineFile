@@ -41,17 +41,11 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         return mReviewArrayList.size();
     }
 
-    public void swap(ArrayList<Review> newReviewArrayList) {
-        mReviewArrayList.clear();
-        mReviewArrayList.addAll(newReviewArrayList);
-        notifyDataSetChanged();
-    }
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView mTextViewAuthor, mTextViewContent;
 
-        public TextView mTextViewAuthor, mTextViewContent;
-
-        public ViewHolder(View v) {
+        ViewHolder(View v) {
             super(v);
             mTextViewAuthor = (TextView) v.findViewById(R.id.author_textView);
             mTextViewContent = (TextView) v.findViewById(R.id.content_textView);

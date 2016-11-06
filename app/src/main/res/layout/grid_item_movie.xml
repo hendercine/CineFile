@@ -5,4 +5,5 @@
     android:layout_height="wrap_content"
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:gravity="center_vertical"
-    android:id="@+id/grid_item_movie_poster" />
+    android:id="@+id/grid_item_movie_poster"
+    android:contentDescription="@string/movie_poster_description"/>

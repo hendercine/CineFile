@@ -183,7 +183,6 @@ public class DetailFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState != null) {
             final int[] parentPosition = savedInstanceState.getIntArray("DETAILS_PARENT_SCROLL_STATE");
-//            final int[] childPosition = savedInstanceState.getIntArray("DETAILS_CHILD_SCROLL_STATE");
             if (parentPosition != null) {
             ScrollView parent = (ScrollView) getView().findViewById(R.id.parent_scrollView);
             if (parent != null) {

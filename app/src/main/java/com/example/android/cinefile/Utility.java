@@ -21,13 +21,13 @@ import java.net.URL;
 import java.util.ArrayList;
 
 /**
- * Created by Hendercine on 10/19/16.
+ *  CineFile_Stage_2 created by Hendercine on 10/19/16.
  */
 
-public class Utility {
+class Utility {
     private static String API_KEY = BuildConfig.THE_MOVIES_DB_API_KEY;
 
-    public ArrayList<String> getPosterPaths(boolean sortByPop) throws JSONException {
+    ArrayList<String> getPosterPaths(boolean sortByPop) throws JSONException {
         String moviesJSON = sortMovieData(sortByPop);
         JSONArray moviesArray = new JSONObject(moviesJSON).getJSONArray("results");
         ArrayList<String> posterPaths = new ArrayList<>();
@@ -37,7 +37,7 @@ public class Utility {
         return posterPaths;
     }
 
-    public Movie getMovieData(boolean sortByPop, int position) throws JSONException {
+    Movie getMovieData(boolean sortByPop, int position) throws JSONException {
         String moviesJSON = sortMovieData(sortByPop);
         JSONArray moviesArray = new JSONObject(moviesJSON).getJSONArray("results");
         Movie movie = new Movie();
@@ -54,7 +54,7 @@ public class Utility {
         return movie;
     }
 
-    public ArrayList<Trailer> getTrailerData(String id) throws JSONException {
+    private ArrayList<Trailer> getTrailerData(String id) throws JSONException {
         JSONArray trailerArray = new JSONObject(getJsonData(
                 "http://api.themoviedb.org/3/movie/" + id + "/videos?api_key=" + API_KEY))
                 .getJSONArray("results");
@@ -71,7 +71,7 @@ public class Utility {
         return trailers;
     }
 
-    public ArrayList<Review> getReviewData(String id) throws JSONException {
+    private ArrayList<Review> getReviewData(String id) throws JSONException {
         JSONArray reviewArray = new JSONObject(getJsonData(
                 "http://api.themoviedb.org/3/movie/" + id + "/reviews?api_key=" + API_KEY))
                 .getJSONArray("results");
@@ -86,14 +86,14 @@ public class Utility {
         return reviews;
     }
 
-    public boolean isNetworkAvailable(Context context) {
+    boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager =
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 
-    public String sortMovieData(boolean sortByPop) {
+    private String sortMovieData(boolean sortByPop) {
         String urlString;
         if (sortByPop) {
             urlString = "http://api.themoviedb.org/3/movie/popular?api_key=" + API_KEY;
@@ -103,7 +103,7 @@ public class Utility {
         return getJsonData(urlString);
     }
 
-    public String getJsonData(String urlString) {
+    private String getJsonData(String urlString) {
         // These two need to be declared outside the try/catch
         // so that they can be closed in the finally block.
         HttpURLConnection urlConnection = null;

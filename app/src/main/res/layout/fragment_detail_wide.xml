@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent_scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipChildren="false"
@@ -29,15 +29,14 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/placeholder" />
 
-
-                <ImageView
-                    android:id="@+id/detail_poster_image_view"
-                    style="@style/detail_thumb_image"
-                    android:layout_width="@dimen/details_thumb_width"
-                    android:layout_height="@dimen/details_thumb_height"
-                    android:contentDescription="@string/poster_thumbnail_description"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/placeholder_portrait" />
+            <ImageView
+                android:id="@+id/detail_poster_image_view"
+                style="@style/detail_thumb_image"
+                android:layout_width="@dimen/details_thumb_width"
+                android:layout_height="@dimen/details_thumb_height"
+                android:contentDescription="@string/poster_thumbnail_description"
+                android:scaleType="fitXY"
+                android:src="@drawable/placeholder_portrait" />
 
             <CheckBox
                 android:id="@+id/fav_btn"

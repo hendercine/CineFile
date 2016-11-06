@@ -18,17 +18,17 @@ import java.util.ArrayList;
 
 public class MovieDbHandler extends SQLiteOpenHelper {
 
-    public static final String TABLE_NAME = "favorites";
-    public static final String COLUMN_ID = "id";
-    public static final String COLUMN_MOVIE_ID = "movie_id";
-    public static final String COLUMN_MOVIE_TITLE = "original_title";
-    public static final String COLUMN_MOVIE_POSTER_PATH = "poster_path";
-    public static final String COLUMN_PLOT_SUMMARY = "plot_summary";
-    public static final String COLUMN_MOVIE_VOTE_AVERAGE = "vote_average";
-    public static final String COLUMN_MOVIE_RELEASE_DATE = "release_date";
-    public static final String COLUMN_MOVIE_BACKDROP_PATH = "backdrop_path";
-    public static final String COLUMN_MOVIE_TRAILERS = "trailer_paths";
-    public static final String COLUMN_MOVIE_REVIEWS = "reviews";
+    private static final String TABLE_NAME = "favorites";
+    private static final String COLUMN_ID = "id";
+    private static final String COLUMN_MOVIE_ID = "movie_id";
+    private static final String COLUMN_MOVIE_TITLE = "original_title";
+    private static final String COLUMN_MOVIE_POSTER_PATH = "poster_path";
+    private static final String COLUMN_PLOT_SUMMARY = "plot_summary";
+    private static final String COLUMN_MOVIE_VOTE_AVERAGE = "vote_average";
+    private static final String COLUMN_MOVIE_RELEASE_DATE = "release_date";
+    private static final String COLUMN_MOVIE_BACKDROP_PATH = "backdrop_path";
+    private static final String COLUMN_MOVIE_TRAILERS = "trailer_paths";
+    private static final String COLUMN_MOVIE_REVIEWS = "reviews";
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "movies.db";
 
@@ -162,7 +162,7 @@ public class MovieDbHandler extends SQLiteOpenHelper {
         return movie;
     }
 
-    public String reviewsToString(ArrayList<Review> reviews) {
+    private String reviewsToString(ArrayList<Review> reviews) {
         String string = "";
         for (Review review : reviews)
             string += "<--new>" + review.getAuthor() +
@@ -170,7 +170,7 @@ public class MovieDbHandler extends SQLiteOpenHelper {
         return string;
     }
 
-    public String trailersToString(ArrayList<Trailer> trailers) {
+    private String trailersToString(ArrayList<Trailer> trailers) {
         String string = "";
         for (Trailer trailer : trailers)
             string += "--" + trailer.getTrailerName() +
@@ -178,7 +178,7 @@ public class MovieDbHandler extends SQLiteOpenHelper {
         return string;
     }
 
-    public ArrayList<Trailer> parseTrailers(String string) {
+    private ArrayList<Trailer> parseTrailers(String string) {
         ArrayList<Trailer> trailers = new ArrayList<>();
         String[] trailersArray = string.split("--");
 
@@ -192,7 +192,7 @@ public class MovieDbHandler extends SQLiteOpenHelper {
         return trailers;
     }
 
-    public ArrayList<Review> parseReviews(String string) {
+    private ArrayList<Review> parseReviews(String string) {
         ArrayList<Review> reviews = new ArrayList<>();
         String[] reviewsArray = string.split("<--new>");
 

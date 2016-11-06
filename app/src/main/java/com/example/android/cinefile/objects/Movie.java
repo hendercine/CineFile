@@ -10,9 +10,9 @@ import java.util.ArrayList;
 @Parcel
 public class Movie {
 
-    public String movieId, movieTitle, releaseDate, posterPath, backdropPath, voteAverage, plot;
-    public ArrayList<Trailer> trailers;
-    public ArrayList<Review> reviews;
+    String movieId, movieTitle, releaseDate, posterPath, backdropPath, voteAverage, plot;
+    ArrayList<Trailer> trailers;
+    ArrayList<Review> reviews;
 
     public String getMovieId() {
         return movieId;

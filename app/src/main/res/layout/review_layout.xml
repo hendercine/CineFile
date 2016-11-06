@@ -11,13 +11,11 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/default_item_spacing"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textStyle="bold|italic"
-        android:text="Catherine Astolfo"/>
+        android:textStyle="bold|italic" />
 
     <TextView
         android:id="@+id/content_textView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Here's where a bunch of text will be that is the review. It will likely fill up a great deal of space, more than I can be bothered to type out at the moment. This amount of placeholder text will have to suffice."/>
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

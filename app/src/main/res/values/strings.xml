@@ -65,5 +65,8 @@
     <string name="offline_message">"Oops! You have no internet connection :("</string>
     <string name="nothing_here_yet">Nothing Here yet.</string>
     <string name="share">Share</string>
+    <string name="trailer_video_thumbnail">Trailer video thumbnail</string>
+    <string name="trailer_play_button_description">Trailer play button</string>
+    <string name="movie_poster_description">Movie Poster</string>
 
 </resources>

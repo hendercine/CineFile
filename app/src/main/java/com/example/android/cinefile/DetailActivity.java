@@ -20,7 +20,8 @@ public class DetailActivity extends AppCompatActivity {
 
         mDetailFragment = new DetailFragment();
         if (savedInstanceState != null) {
-            getSupportFragmentManager().getFragment(savedInstanceState, "fragment");
+            mDetailFragment = (DetailFragment) getSupportFragmentManager().
+                    getFragment(savedInstanceState, "fragment");
         } else {
             Bundle bundle = new Bundle();
             bundle.putParcelable("movie", Parcels.wrap(movie));
@@ -34,7 +35,7 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        mDetailFragment.getFragmentManager().putFragment(outState, "fragment", mDetailFragment);
+        getSupportFragmentManager().putFragment(outState, "fragment", mDetailFragment);
     }
 
     @Override

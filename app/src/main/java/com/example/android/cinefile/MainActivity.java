@@ -62,9 +62,9 @@ public class MainActivity extends AppCompatActivity {
                 mGridView.setAdapter(adapter);
                 mGridView.setSelection(savedInstanceState.getInt("GRID_SCROLL_STATE"));
                 if (mIsTablet) {
-                    getFragmentManager().beginTransaction().
+                    getSupportFragmentManager().beginTransaction().
                             replace(R.id.detail_frame,
-                                    getFragmentManager().
+                                    getSupportFragmentManager().
                                             getFragment(savedInstanceState, "DETAIL_FRAGMENT")).
                             commit();
                 }
@@ -79,10 +79,10 @@ public class MainActivity extends AppCompatActivity {
         outState.putStringArrayList("POSTER_PATHS", mPosterPaths);
         outState.putInt("GRID_SCROLL_STATE", mGridView.getFirstVisiblePosition());
         outState.putBoolean("SNACKBAR_VISIBLE", mSnackbarShown);
-        if (mIsTablet && getFragmentManager().findFragmentById(R.id.detail_frame) != null)
-            getFragmentManager().putFragment(outState,
+        if (mIsTablet && getSupportFragmentManager().findFragmentById(R.id.detail_frame) != null)
+            getSupportFragmentManager().putFragment(outState,
                     "DETAIL_FRAGMENT",
-                    getFragmentManager().findFragmentById(R.id.detail_frame));
+                    getSupportFragmentManager().findFragmentById(R.id.detail_frame));
     }
 
     @Override
@@ -152,10 +152,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void loadDetails(final int position) {
         if (mUtility.isNetworkAvailable(this) || mSortCriteria.equals("fav")) {
-            if (mIsTablet && (getFragmentManager().findFragmentById(R.id.detail_frame) != null)) {
-                getFragmentManager().
+            if (mIsTablet && (getSupportFragmentManager().findFragmentById(R.id.detail_frame) != null)) {
+                getSupportFragmentManager().
                         beginTransaction().
-                        remove(getFragmentManager().findFragmentById(R.id.detail_frame)).
+                        remove(getSupportFragmentManager().findFragmentById(R.id.detail_frame)).
                         commit();
             }
         } else { Snackbar.make(findViewById(R.id.container),
@@ -232,11 +232,14 @@ public class MainActivity extends AppCompatActivity {
                         movie = mUtility.getMovieData(mSortCriteria.equals("pop"), position);
                     } catch (JSONException e) {
                         e.printStackTrace();
-                    }
-                 else movie = null;
-            } else if (mMovieIds.size() != 0)
-                movie = mMovieDbHandler.fetchMovieDetails(mMovieIds.get(position));
-            else movie = null;
+                    } else movie = null;
+            } else if (mSortCriteria.equals("fav")) {
+                mMovieDbHandler = new MovieDbHandler(getApplicationContext());
+                mMovieIds = mMovieDbHandler.fetchFavouriteIds();
+                if (mMovieIds.size() != 0) {
+                    movie = mMovieDbHandler.fetchMovieDetails(mMovieIds.get(position));
+                }
+            } else movie = null;
             return movie;
         }
 

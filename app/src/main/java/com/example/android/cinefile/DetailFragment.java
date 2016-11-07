@@ -55,6 +55,7 @@ public class DetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
         String moviesStr = "movie";
         if (mMovie != null)
         mMovie = Parcels.unwrap(getArguments().getParcelable(moviesStr));
@@ -65,9 +66,12 @@ public class DetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         View detailView = inflater.inflate(R.layout.fragment_detail, container, false);
 
+        // set activity title
+        getActivity().setTitle(mMovie.getMovieTitle());
+
         //Pass Title text
-        TextView title = (TextView) detailView.findViewById(R.id.movie_title_text);
-        title.setText(mMovie.getMovieTitle());
+        TextView movie_title = (TextView) detailView.findViewById(R.id.movie_title_text);
+        movie_title.setText(mMovie.getMovieTitle());
 
         //Pass Poster thumbnail
         Picasso.with(getContext()).
@@ -220,6 +224,7 @@ public class DetailFragment extends Fragment {
         @Override
         protected Boolean doInBackground(String... params) {
             MovieDbHandler db = new MovieDbHandler(getActivity().getApplicationContext());
+
             if (params[0].equals("="))
                 return db.isFav(mMovie.getMovieId());
             if (params[0].equals("+"))

@@ -7,7 +7,7 @@
     tools:context="com.example.android.cinefile.MainActivity" >
 
     <FrameLayout
-        android:id="@+id/left_panel"
+        android:id="@+id/container"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -19,6 +19,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:numColumns="auto_fit" />
+
+        <TextView
+            android:id="@+id/noItems_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/nothing_here_yet"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:visibility="gone" />
+
     </FrameLayout>
 
     <FrameLayout

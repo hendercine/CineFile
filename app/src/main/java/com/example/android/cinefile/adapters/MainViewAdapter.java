@@ -17,16 +17,16 @@ import java.util.ArrayList;
 
 public class MainViewAdapter extends BaseAdapter {
     private Context mContext;
-    private ArrayList<String> paths;
+    private ArrayList<String> mPaths;
 
     public MainViewAdapter(Context context, ArrayList<String> paths) {
         mContext = context;
-        this.paths = paths;
+        this.mPaths = paths;
     }
 
     @Override
     public int getCount() {
-        return paths.size();
+        return mPaths.size();
     }
 
     @Override
@@ -53,7 +53,7 @@ public class MainViewAdapter extends BaseAdapter {
 
             String posterUrl = "http://image.tmdb.org/t/p/w185/";
             Picasso.with(mContext).
-                    load(posterUrl + paths.get(position)).
+                    load(posterUrl + mPaths.get(position)).
                     placeholder(R.drawable.placeholder_portrait).
                     into(gridPosterView);
 

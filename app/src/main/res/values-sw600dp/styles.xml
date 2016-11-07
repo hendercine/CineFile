@@ -29,7 +29,7 @@
 
     <style name="detail_wide_plot_summary">
         <item name="android:layout_margin">@dimen/default_item_spacing</item>
-        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
         <item name="android:layout_centerHorizontal">true</item>
     </style>
 
@@ -41,7 +41,7 @@
 
     <style name="detail_wide_thumb_image">
         <item name="android:layout_marginLeft">@dimen/margin_large</item>
-        <item name="android:layout_marginTop">@dimen/details_wide_thumb_margin_top</item>
+        <item name="android:layout_marginTop">@dimen/details_sw600dp_thumb_margin_top</item>
         <item name="android:layout_marginBottom">@dimen/margin_default</item>
         <item name="android:src">@drawable/placeholder_portrait</item>
     </style>
@@ -51,7 +51,7 @@
         <item name="android:layout_marginRight">@dimen/margin_large</item>
         <item name="android:layout_marginLeft">@dimen/margin_large</item>
         <item name="android:maxLines">4</item>
-        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Headline</item>
     </style>
 
     <style name="detail_release">
@@ -64,9 +64,9 @@
 
     <style name="detail_vote_avg">
         <item name="android:layout_marginTop">@dimen/margin_default</item>
-        <item name="android:layout_marginRight">@dimen/margin_large</item>
+        <item name="android:paddingRight">@dimen/margin_Xlarge</item>
         <item name="android:layout_marginLeft">@dimen/margin_default</item>
-        <item name="android:gravity">bottom</item>
+        <item name="android:gravity">center_vertical</item>
     </style>
 
 </resources>

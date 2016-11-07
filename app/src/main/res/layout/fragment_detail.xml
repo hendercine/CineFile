@@ -10,7 +10,7 @@
     tools:showIn="@layout/activity_detail">
 
     <RelativeLayout
-        android:id="@+id/detail_view_top"
+        android:id="@+id/main_child_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -159,11 +159,17 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/reviews_title"
+                style="@style/detail_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/reviews_title" />
+
+            <TextView
                 android:id="@+id/reviews_author"
                 style="@style/detail_title"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/reviews_title" />
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/noReviews_textView"
